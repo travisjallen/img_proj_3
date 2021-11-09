@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.4.20)  7 NOV 2021 21:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.4.20)  8 NOV 2021 13:46
 entering extended mode
 **./ImgReport3.tex
 (ImgReport3.tex
@@ -376,35 +376,41 @@ File: p3_output/img_1_mosaic.png Graphic file (type png)
 Package pdftex.def Info: p3_output/img_1_mosaic.png  used on input line 219.
 (pdftex.def)             Requested size: 469.75499pt x 495.86641pt.
  [11 <./p3_output/img_0_mosaic.png>]
-[12 <./p3_output/img_1_mosaic.png>] (ImgReport3.aux) ) 
+[12 <./p3_output/img_1_mosaic.png>]
+<overlap.png, id=78, 498.444pt x 167.097pt>
+File: overlap.png Graphic file (type png)
+<use overlap.png>
+Package pdftex.def Info: overlap.png  used on input line 237.
+(pdftex.def)             Requested size: 433.62pt x 145.36555pt.
+ [13 <./overlap.png>] (ImgReport3.aux) ) 
 Here is how much of TeX's memory you used:
- 3904 strings out of 479334
- 58536 string characters out of 2857084
+ 3910 strings out of 479334
+ 58621 string characters out of 2857084
  364875 words of memory out of 3000000
- 21307 multiletter control sequences out of 15000+200000
+ 21312 multiletter control sequences out of 15000+200000
  411807 words of font info for 60 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,6n,74p,911b,230s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/travi/AppData/L
-ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/travi/
-AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Use
-rs/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pf
-b><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
-cmmi10.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmmi7.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/pu
-blic/amsfonts/cm/cmr10.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/
-type1/public/amsfonts/cm/cmr12.pfb><C:/Users/travi/AppData/Local/Programs/MiKTe
-X/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/travi/AppData/Local/Progra
-ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/travi/AppData/Local
-/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/travi/AppD
-ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/tr
-avi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:
-/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt1
-0.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
-/symbols/msbm10.pfb>
-Output written on ImgReport3.pdf (12 pages, 9173683 bytes).
+ 68i,6n,74p,1304b,230s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/travi/AppData/Local/Programs/
+MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/travi/AppData/Local/
+Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/travi/AppDa
+ta/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/tr
+avi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:
+/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7
+.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
+cm/cmr10.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
+msfonts/cm/cmr12.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/
+public/amsfonts/cm/cmr17.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/font
+s/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/travi/AppData/Local/Programs/MiKT
+eX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/travi/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/travi/AppData/Lo
+cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/travi/A
+ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/User
+s/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm1
+0.pfb>
+Output written on ImgReport3.pdf (13 pages, 9205188 bytes).
 PDF statistics:
- 122 PDF objects out of 1000 (max. 8388607)
+ 128 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 61 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 66 words of extra memory for PDF output out of 10000 (max. 10000000)
 
