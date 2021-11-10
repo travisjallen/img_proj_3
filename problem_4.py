@@ -127,31 +127,6 @@ def overlap(pc_real,img_3_0,img_3_1):
         canvas[0:m,0:n] = img_3_1
         canvas[ml:ml+m,nl:nl+n] = img_3_0
         
-        plt.figure(figsize=(9,9.5))
-        plt.imshow(canvas,cmap='gray')
-        plt.axis('off')
-        plt.title("Two-image Mosaic")
-        plt.tight_layout()
-        plt.savefig("p3_output/img_3_mosaic.png")
-        plt.show()
-
-        plt.figure(figsize=(12,6.5))
-        plt.subplot(1,2,1)
-        plt.imshow(img_3_1,cmap='gray')
-        plt.axis('off')
-        plt.title("Image 1")
-
-        plt.subplot(1,2,2)
-        plt.imshow(img_3_0,cmap='gray')
-        plt.axis('off')
-        plt.title("Image 2")
-
-        plt.tight_layout()
-        plt.savefig("p3_output/img_3_pieces.png")
-        plt.show()
-
-        print("Region 0")
-
     elif (max_idx[0] == 1):
         ## create canvas
         canvas = np.ones((2*m-lambda_y,n+lambda_x))*127
@@ -160,31 +135,6 @@ def overlap(pc_real,img_3_0,img_3_1):
         canvas[ml:-1,0:n] = img_3_1
         canvas[0:m,lambda_x:-1] = img_3_0
         
-        plt.figure(figsize=(9,9.5))
-        plt.imshow(canvas,cmap='gray')
-        plt.axis('off')
-        plt.title("Two-image Mosaic")
-        plt.tight_layout()
-        plt.savefig("p3_output/img_3_mosaic.png")
-        plt.show()
-
-        plt.figure(figsize=(12,6.5))
-        plt.subplot(1,2,1)
-        plt.imshow(img_3_1,cmap='gray')
-        plt.axis('off')
-        plt.title("Image 1")
-
-        plt.subplot(1,2,2)
-        plt.imshow(img_3_0,cmap='gray')
-        plt.axis('off')
-        plt.title("Image 2")
-
-        plt.tight_layout()
-        plt.savefig("p3_output/img_3_pieces.png")
-        plt.show()
-
-        print("Region 1")
-
     elif (max_idx[0] == 2):
         ## create canvas
         canvas = np.ones((m+lambda_y,2*n-lambda_x))*127
@@ -192,31 +142,7 @@ def overlap(pc_real,img_3_0,img_3_1):
         ## now plot the images in the right places
         canvas[lambda_y-1:-1,0:n] = img_3_1
         canvas[0:m,nl-1:-1] = img_3_0
-        plt.figure(figsize=(9,9.5))
-        plt.imshow(canvas,cmap='gray')
-        plt.axis('off')
-        plt.title("Two-image Mosaic")
-        plt.tight_layout()
-        plt.savefig("p3_output/img_3_mosaic.png")
-        plt.show()
-
-        plt.figure(figsize=(12,6.5))
-        plt.subplot(1,2,1)
-        plt.imshow(img_3_1,cmap='gray')
-        plt.axis('off')
-        plt.title("Image 1")
-
-        plt.subplot(1,2,2)
-        plt.imshow(img_3_0,cmap='gray')
-        plt.axis('off')
-        plt.title("Image 2")
-
-        plt.tight_layout()
-        plt.savefig("p3_output/img_3_pieces.png")
-        plt.show()
-
-        print("Region 2")
-
+        
     elif (max_idx[0] == 3):
         ## create canvas
         canvas = np.ones((m+lambda_y,n+lambda_x))*127
@@ -225,31 +151,6 @@ def overlap(pc_real,img_3_0,img_3_1):
         canvas[lambda_y-1:-1,lambda_x-1:-1] = img_3_1
         canvas[0:m,0:n] = img_3_0
         
-        plt.figure(figsize=(9,9.5))
-        plt.imshow(canvas,cmap='gray')
-        plt.axis('off')
-        plt.title("Two-image Mosaic")
-        plt.tight_layout()
-        plt.savefig("p3_output/img_3_mosaic.png")
-        plt.show()
-
-        plt.figure(figsize=(12,6.5))
-        plt.subplot(1,2,1)
-        plt.imshow(img_3_1,cmap='gray')
-        plt.axis('off')
-        plt.title("Image 1")
-
-        plt.subplot(1,2,2)
-        plt.imshow(img_3_0,cmap='gray')
-        plt.axis('off')
-        plt.title("Image 2")
-
-        plt.tight_layout()
-        plt.savefig("p3_output/img_3_pieces.png")
-        plt.show()
-
-        print("Region 3")
-
 ## read the images. this is a cumbersome way but it works
 img_0 = io.imread('cell_images/0001.000.png',as_gray=True)
 img_1 = io.imread('cell_images/0001.001.png',as_gray=True)
@@ -257,6 +158,8 @@ img_2 = io.imread('cell_images/0001.002.png',as_gray=True)
 img_3 = io.imread('cell_images/0001.004.png',as_gray=True)
 img_4 = io.imread('cell_images/0001.005.png',as_gray=True)
 img_5 = io.imread('cell_images/0001.006.png',as_gray=True)
+
+num_images = 6
 
 ## find the shape of each image
 sizes = np.zeros((6,2))
@@ -284,18 +187,92 @@ else:
     img_array[:,:,4] = img_4
     img_array[:,:,5] = img_5
 
-    ## find pairs
+    ## Create array to store pair information
+    pairs = np.zeros((10,5))
 
     ## compute the maximum phase correlation of each image wrt image 0
-    max_0 = np.zeros((5,1))
-    max_0[0] = max_phase_correlation(img_array[:,:,0],img_array[:,:,1])
-    max_0[1] = max_phase_correlation(img_array[:,:,0],img_array[:,:,2])
-    max_0[2] = max_phase_correlation(img_array[:,:,0],img_array[:,:,3])
-    max_0[3] = max_phase_correlation(img_array[:,:,0],img_array[:,:,4])
-    max_0[4] = max_phase_correlation(img_array[:,:,0],img_array[:,:,5])
+    max_0 = np.zeros((num_images-1,1))
+    for i in range(num_images-1):
+        max_0[i] = max_phase_correlation(img_array[:,:,0],img_array[:,:,i+1])
     
-    ## find the index of the maximum of these maxima:
+    ## find the index of the maximum of these maxima, as well as the value
     index_pair_0 = np.unravel_index(np.argmax(max_0, axis=None), max_0.shape)
-    
-    ## also find the value of the maximum phase correlation. This will be used for comparison
     supremum = max_0[index_pair_0]
+
+    ## store the pair information
+    pairs[0,0] = 0                  ## base image
+    pairs[0,1] = index_pair_0[0]    ## paired image
+    pairs[0,2] = supremum           ## phase correlation supremum
+
+    ## check to see if there are any other pairs with 0
+    delta = 0.5*supremum
+    counts = 1
+
+    ## loop through maximum phase correlations with image 0. Dont need to include image 0
+    for i in range((num_images-1)):
+        ## if the maximum phase correlation is in the allowed interval and is not a previously added pair, add it to pairs
+        if (max_0[i] > (supremum-delta) and (i !=pairs[0,1])):
+            ## the image is a pair with image 0
+            pairs[counts,0] = 0
+            pairs[counts,1] = i+1
+            pairs[counts,2] = max_0[i]
+            counts += 1
+    
+    ## now compute the phase correlations with respect to image 1. Don't need to include image 0 or image 1
+    max_1 = np.zeros((num_images-2,1))
+    for i in range(num_images-2):
+        max_1[i] = max_phase_correlation(img_array[:,:,1],img_array[:,:,i+2])
+
+    for i in range((num_images-2)):
+        ## if the maximum phase correlation is in the allowed interval 
+        if (max_1[i] > (supremum-delta)):
+            ## the image is a pair with image 1
+            pairs[counts,0] = 1
+            pairs[counts,1] = i+2
+            pairs[counts,2] = max_1[i]
+            counts += 1
+    
+    ## now compute the phase correlations with respect to image 2. Don't need to include image 0, 1, or 2
+    max_2 = np.zeros((num_images-3,1))
+    for i in range(num_images-3):
+        max_2[i] = max_phase_correlation(img_array[:,:,2],img_array[:,:,i+3])
+
+    for i in range((num_images-3)):
+        ## if the maximum phase correlation is in the allowed interval 
+        if (max_2[i] > (supremum-delta)):
+            ## the image is a pair with image 1
+            pairs[counts,0] = 2
+            pairs[counts,1] = i+3
+            pairs[counts,2] = max_2[i]
+            counts += 1
+    
+    ## now compute the phase correlations with respect to image 3. Don't need to include image 0, 1, 2, or 3
+    max_3 = np.zeros((num_images-4,1))
+    for i in range(num_images-4):
+        max_3[i] = max_phase_correlation(img_array[:,:,3],img_array[:,:,i+4])
+
+    for i in range((num_images-4)):
+        ## if the maximum phase correlation is in the allowed interval 
+        if (max_3[i] > (supremum-delta)):
+            ## the image is a pair with image 1
+            pairs[counts,0] = 3
+            pairs[counts,1] = i+4
+            pairs[counts,2] = max_3[i]
+            counts += 1
+
+    ## now compute the phase correlations with respect to image 4. Don't need to include image 0, 1, 2, 3, 4
+    max_4 = np.zeros((num_images-5,1))
+    for i in range(num_images-5):
+        max_4[i] = max_phase_correlation(img_array[:,:,4],img_array[:,:,i+5])
+
+    for i in range((num_images-5)):
+        ## if the maximum phase correlation is in the allowed interval 
+        if (max_4[i] > (supremum-delta)):
+            ## the image is a pair with image 1
+            pairs[counts,0] = 4
+            pairs[counts,1] = i+5
+            pairs[counts,2] = max_4[i]
+            counts += 1
+    print(pairs)
+
+    ## now we have found all of the pairs

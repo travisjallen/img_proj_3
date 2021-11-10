@@ -166,6 +166,7 @@ Next, I implemented a low pass filter on the above phase correlation before I to
 \newpage
 \section{Peak Finding}	
 \subsection{Algorithm Development - Na\"ive Implementation}
+\label{alg_dev_peak}
 We want to compute the phase correlation of two overlapping images and find the relative location of one with respect to the other so that when we overlay them they line up. Without loss of generality, we will call these images image 1 and image 2.
 \begin{figure}[H]
 	\centering
@@ -228,14 +229,37 @@ I have called this the ``na\"ive implementation" because I am simply finding the
 We want to build a mosaic out of a set of 6 images. We know that some of these images overlap, but we don't know how many overlap, which particular images overlap with the others, and how many sides of each image overlap. How do we even begin?
 
 We begin by computing the phase correlation of images 1-5 with image 0. Note that we could have begun with a different image and completed the following process to yield identical results. The choice of beginning at image 0 is purely one made for convenient bookkeeping. Each of these 5 phase correlations is stored in an array, among which there is a maximal element. If we consider the list of the 5 maximal elements, this list itself will have a maximal entry. We find this entry and record its value as the current supremum of the set of possible phase correlation intensities. We call this value $\lambda$ such that 
-\[\lambda \equiv \sup_{x,y \in \mathcal{D}} \left\{p(x, y)=\mathbb{F}^{-1}\left[\frac{F^{*}(u, v) G(u, v)}{\left|F^{*}(u, v) G(u, v)\right|}\right]\right\}\] 
+\[\phi \equiv \sup_{x,y \in \mathcal{D}} \left\{p(x, y)=\mathbb{F}^{-1}\left[\frac{F^{*}(u, v) G(u, v)}{\left|F^{*}(u, v) G(u, v)\right|}\right]\right\}\] 
 
-Where $\mathcal{D}$ is the domain of the phase correlation, and $F$ and $G$ are the images that give rise to this supremum. At this point, we know that image 0 and the image which contributed the supremum of phase correlation intensities are a pair which overlap. How do we find other pairs? We can repeat the procedure of examining the maximal element of the phase correlation of each combination of images. All phase correlations of pairs of images will have extrema whether or not they overlap, so we are interested in determining if the maximal element of a particular phase correlation is sufficiently big to be indicative of an overlapping pair. But how big is sufficiently big? We will take $\lambda$ as defined above as our guide and consider that if a pair of images overlap, then the maximum intensity of their phase correlation will be contained in an interval centered at $\lambda$. Arbitrarily, we will say that this interval has a width of $2\delta$ where $\delta$ is some small percentage of $\lambda$. In practice, this parameter will need tuning in order to reject false positives. Centering this interval at $\lambda$ accounts for the case that we did not encounter the actual supremum in our initial phase correlations. A picture of this scheme is shown below.
+Where $\mathcal{D}$ is the domain of the phase correlation, and $F$ and $G$ are the images that give rise to this supremum. At this point, we know that image 0 and the image which contributed the supremum of phase correlation intensities are a pair which overlap. How do we find other pairs? We can repeat the procedure of examining the maximal element of the phase correlation of each combination of images. All phase correlations of pairs of images will have extrema whether or not they overlap, so we are interested in determining if the maximal element of a particular phase correlation is sufficiently big to be indicative of an overlapping pair. But how big is sufficiently big? We will take $\phi$ as defined above as our guide and consider that if a pair of images overlap, then the maximum intensity of their phase correlation will be contained in an interval centered at $\phi$. Arbitrarily, we will say that this interval has a width of $2\delta$ where $\delta$ is some small percentage of $\phi$. In practice, this parameter will need tuning in order to reject false positives. Centering this interval at $\phi$ accounts for the case that we did not encounter the actual supremum in our initial phase correlations. A picture of this scheme is shown below.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=6in]{overlap.png}
 \end{figure}
+
+Now, we compute all of the possible phase correlations of combinations of images and use this metric to determine whether or not they are a pair. If they are, we will store this information in a list of pairs. Once we have completed this process for all relevant images (the phase correlation of image F with image G is the same as image G with image F), we can begin to determine where images should be placed. To do this, we compute the phase correlation as described in section \ref{alg_dev_peak}. This tells us how each pair of images overlap and it also tells us how big of a canvas is needed to contain the two images. 
+
+We can create an array that contains information about each pair. Specifically, the array should contain the image number, the number of the image that it overlaps, and the distances $\lambda_{x,i}$ and $\lambda_{y,i}$.
+
+Now it's just a matter of placing the images in the correct location. We consider the image which is a member of the most pairs to be the ``base" image, and we place that one first. Then, we place all of its pairs according to the scheme in section \ref{alg_dev_peak}. How do we handle the next images? This is more complicated. Consider the configuration of images in figure \ref{coord_sys}.
+
+\begin{figure}[H]
+	\centering
+	\label{coord_sys}
+	\includegraphics[width=5in]{coord_sys.png}
+	\caption{A possible configuration of overlapping images, showing the coordinate systems with respect to which each pair was overlapped.}
+\end{figure}
+
+
+We know the locations of each $(\lambda_{x,i},\lambda_{y,i})$ with respect to their own coordinate systems, but we do not yet know the location of $(\lambda_{x,1},\lambda_{y,1})$ with respect to coordinate system 0. This is simple to compute because we are not considering rotations, so the axes of each successive frame are aligned. This means that the distance from the origin of coordinate system 0 to an arbitrary $(\lambda_{x,n},\lambda_{y,n})$ is the vector sum of of each intervening $(\lambda_{x,i},\lambda_{y,i})$ expressed in its own coordinate system. 
+
+
+%		$i-1$ & $i$ & $\lambda_{x,i-1}$ & $\lambda_{y,i-1}$ &  \\ \hline
+
+image number, image it overlaps with, lambda x and lambda y of this image
+
+Then, we make a map of the images that are on the canvas so that we can locate each tile.
 
 \end{document}          
 
