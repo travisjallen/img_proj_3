@@ -15,6 +15,7 @@ from numba import jit
 ## define the functions we will use
 ## define function to perform phase correlation
 def phase_correlation(F,G):
+    """Returns real part of phase correlation of two images"""
     ## compute fourier transform of image G
     G_fourier = np.fft.fft2(G)
 
@@ -39,6 +40,7 @@ def phase_correlation(F,G):
 
 ## define function to maximum of phase correlation
 def max_phase_correlation(F,G):
+    """Computes the maximal element in the phase correlation of two images"""
     ## compute phase correlation of the two images
     correlation = phase_correlation(F,G)
 
@@ -46,13 +48,14 @@ def max_phase_correlation(F,G):
     maximum_phase_correlation = np.amax(correlation)
     return maximum_phase_correlation
 
-def overlap(pc_real,img_3_0,img_3_1):
+def overlap(pc_real,F,G):
     ## find the indices of the maximal element of the phase correlation, call them lambda_y and lambda_x
     index = np.unravel_index(np.argmax(pc_real, axis=None), pc_real.shape)
     lambda_y = index[0]
     lambda_x = index[1]
 
     ## now compute the phase correlations of each region
+    size = np.shape(pc_real)
     m = size[0]
     n = size[1]
     ml = m-lambda_y
@@ -64,8 +67,8 @@ def overlap(pc_real,img_3_0,img_3_1):
     region0_image2 = np.zeros((lambda_y,lambda_x))
 
     ## populate according to convention described in report
-    region0_image1[0:-1,0:-1] = img_3_1[ml:-1,nl:-1]
-    region0_image2[0:-1,0:-1] = img_3_0[0:lambda_y-1,0:lambda_x-1]
+    region0_image1[0:-1,0:-1] = G[ml:-1,nl:-1]
+    region0_image2[0:-1,0:-1] = F[0:lambda_y-1,0:lambda_x-1]
 
     ## compute phase correlation
     region_0_phase_correlation = phase_correlation(region0_image1,region0_image2)
@@ -78,8 +81,8 @@ def overlap(pc_real,img_3_0,img_3_1):
     region1_image2 = np.zeros((lambda_y,nl))
 
     ## populate according to convention described in report
-    region1_image1[0:-1,0:-1] = img_3_1[ml:-1,0:nl-1]
-    region1_image2[0:-1,0:-1] = img_3_0[0:lambda_y-1,lambda_x:-1]
+    region1_image1[0:-1,0:-1] = G[ml:-1,0:nl-1]
+    region1_image2[0:-1,0:-1] = F[0:lambda_y-1,lambda_x:-1]
 
     ## compute phase correlation
     region_1_phase_correlation = phase_correlation(region1_image1,region1_image2)
@@ -92,8 +95,8 @@ def overlap(pc_real,img_3_0,img_3_1):
     region2_image2 = np.zeros((ml,lambda_x))
 
     ## populate according to convention described in report
-    region2_image1[0:-1,0:-1] = img_3_1[0:ml-1,nl:-1]
-    region2_image2[0:-1,0:-1] = img_3_0[lambda_y:-1,0:lambda_x-1]
+    region2_image1[0:-1,0:-1] = G[0:ml-1,nl:-1]
+    region2_image2[0:-1,0:-1] = F[lambda_y:-1,0:lambda_x-1]
 
     ## compute phase correlation
     region_2_phase_correlation = phase_correlation(region2_image1,region2_image2)
@@ -106,8 +109,8 @@ def overlap(pc_real,img_3_0,img_3_1):
     region3_image2 = np.zeros((ml,nl))
 
     ## populate according to convention described in report
-    region3_image1[0:-1,0:-1] = img_3_1[0:ml-1,0:nl-1]
-    region3_image2[0:-1,0:-1] = img_3_0[lambda_y:-1,lambda_x:-1]
+    region3_image1[0:-1,0:-1] = G[0:ml-1,0:nl-1]
+    region3_image2[0:-1,0:-1] = F[lambda_y:-1,lambda_x:-1]
 
     ## compute phase correlation
     region_3_phase_correlation = phase_correlation(region3_image1,region3_image2)
@@ -121,35 +124,49 @@ def overlap(pc_real,img_3_0,img_3_1):
     ## now create the canvas depending on the index. 
     if (max_idx[0] == 0):
         ## create canvas
-        canvas = np.ones((2*m-lambda_y,2*n-lambda_x))*127
+        # canvas = np.ones((2*m-lambda_y,2*n-lambda_x))*127
 
         ## now plot the images in the right places
-        canvas[0:m,0:n] = img_3_1
-        canvas[ml:ml+m,nl:nl+n] = img_3_0
-        
+        # canvas[0:m,0:n] = G
+        G_index = [m,n]
+        # canvas[ml:ml+m,nl:nl+n] = F
+        F_index = [ml,nl]
+
     elif (max_idx[0] == 1):
         ## create canvas
-        canvas = np.ones((2*m-lambda_y,n+lambda_x))*127
+        # canvas = np.ones((2*m-lambda_y,n+lambda_x))*127
 
         ## now plot the images in the right places
-        canvas[ml:-1,0:n] = img_3_1
-        canvas[0:m,lambda_x:-1] = img_3_0
+        # canvas[ml:-1,0:n] = G
+        G_index = [ml,0]
+        # canvas[0:m,lambda_x:-1] = F
+        F_index = [0,lambda_x]
         
     elif (max_idx[0] == 2):
         ## create canvas
-        canvas = np.ones((m+lambda_y,2*n-lambda_x))*127
+        # canvas = np.ones((m+lambda_y,2*n-lambda_x))*127
 
         ## now plot the images in the right places
-        canvas[lambda_y-1:-1,0:n] = img_3_1
-        canvas[0:m,nl-1:-1] = img_3_0
+        # canvas[lambda_y-1:-1,0:n] = G
+        G_index = [lambda_y-1,0]
+        # canvas[0:m,nl-1:-1] = F
+        F_index = [0,nl]
         
     elif (max_idx[0] == 3):
         ## create canvas
-        canvas = np.ones((m+lambda_y,n+lambda_x))*127
+        # canvas = np.ones((m+lambda_y,n+lambda_x))*127
     
         ## now plot the images in the right places
-        canvas[lambda_y-1:-1,lambda_x-1:-1] = img_3_1
-        canvas[0:m,0:n] = img_3_0
+        # canvas[lambda_y-1:-1,lambda_x-1:-1] = G
+        G_index = [lambda_y-1,lambda_x-1]
+        # canvas[0:m,0:n] = F
+        F_index = [0,0]
+
+    lambdas = np.zeros((1,2))
+    lambdas[0,0] = lambda_y
+    lambdas[0,1] = lambda_x
+    # return lambdas
+    return G_index,F_index
         
 ## read the images. this is a cumbersome way but it works
 img_0 = io.imread('cell_images/0001.000.png',as_gray=True)
@@ -273,6 +290,29 @@ else:
             pairs[counts,1] = i+5
             pairs[counts,2] = max_4[i]
             counts += 1
-    print(pairs)
+    
+    ## now we have found all of the pairs. Find the number of nonzero rows in pairs
+    pair_shape = np.shape(pairs)
+    row_count = 1
+    for i in range(pair_shape[1]):
+        if (pairs[i,2] != 0):
+            row_count +=1
 
-    ## now we have found all of the pairs
+    ## build new pairs array, fill it
+    pairs_exact = np.zeros((row_count,5))
+    pairs_exact[:,:] = pairs[0:row_count,:]
+    # print(pairs_exact)
+    
+    ## define a canvas
+    canvas_width = 10*np.amax(sizes[:,1])
+    canvas_height = 10*np.amax(sizes[:,0])
+    canvas = np.ones((canvas_height,canvas_width))
+
+    ## now find the overlap of each pair
+    for i in range(row_count):
+        ## compute phase correlation of image in col 0 and col 1 at this row of pairs_exact
+        pc = phase_correlation(img_array[:,:,int(pairs_exact[i,0])],img_array[:,:,int(pairs_exact[i,1])])
+
+        ## Determine the overlap condition
+        G_I,F_I = overlap(pc,img_array[:,:,int(pairs_exact[i,0])],img_array[:,:,int(pairs_exact[i,1])])
+        
