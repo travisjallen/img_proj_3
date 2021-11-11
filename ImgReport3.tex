@@ -252,14 +252,15 @@ Now it's just a matter of placing the images in the correct location. We conside
 \end{figure}
 
 
-We know the locations of each $(\lambda_{x,i},\lambda_{y,i})$ with respect to their own coordinate systems, but we do not yet know the location of $(\lambda_{x,1},\lambda_{y,1})$ with respect to coordinate system 0. This is simple to compute because we are not considering rotations, so the axes of each successive frame are aligned. This means that the distance from the origin of coordinate system 0 to an arbitrary $(\lambda_{x,n},\lambda_{y,n})$ is the vector sum of of each intervening $(\lambda_{x,i},\lambda_{y,i})$ expressed in its own coordinate system. 
+We know the locations of each $(\lambda_{x,i},\lambda_{y,i})$ with respect to their own coordinate systems, but we do not yet know the location of $(\lambda_{x,1},\lambda_{y,1})$ with respect to coordinate system 0. This is simple to compute because we are not considering rotations, so the axes of each successive frame are aligned. This means that the distance from the origin of coordinate system 0 to an arbitrary $(\lambda_{x,n},\lambda_{y,n})$ is the vector sum of of each intervening $(\lambda_{x,i},\lambda_{y,i})$ expressed in its own coordinate system. We can use this information to place the images on the canvas correctly.
 
-
-%		$i-1$ & $i$ & $\lambda_{x,i-1}$ & $\lambda_{y,i-1}$ &  \\ \hline
-
-image number, image it overlaps with, lambda x and lambda y of this image
-
-Then, we make a map of the images that are on the canvas so that we can locate each tile.
+\subsection{Preliminary Results}
+This method failed and I am not sure where. It was (unnecessarily?) complex, so it is hard to track down where it failed. The results are shown below. Some images are occluded or left out entirely, but that doesn't really matter because the images that do overlap don't actually line up. Back to the drawing board.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.5in]{failure_1.png}
+	\caption{These images don't line up.}
+\end{figure}
 
 \end{document}          
 

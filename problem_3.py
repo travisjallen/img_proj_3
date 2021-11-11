@@ -25,7 +25,7 @@ def phase_correlation(F,G):
     correlation_fourier = F_conj_fourier*G_fourier/(np.absolute(F_conj_fourier*G_fourier))
 
     ## low pass filter the result
-    # correlation_fourier = gaussian_lowpass(correlation_fourier,20,0)
+    correlation_fourier = gaussian_lowpass(correlation_fourier,20,0)
 
     ## compute inverse fourier transform to find phase correlation
     correlation = (np.fft.ifft2(correlation_fourier)) ## np.fft.fftshift
@@ -214,7 +214,7 @@ if (max_idx[0] == 0):
     plt.axis('off')
     plt.title("Two-image Mosaic")
     plt.tight_layout()
-    plt.savefig("p3_output/img_3_mosaic.png")
+    plt.savefig("p3_output/img_3_mosaic_lp.png")
     plt.show()
 
     plt.figure(figsize=(12,6.5))
@@ -247,7 +247,7 @@ elif (max_idx[0] == 1):
     plt.axis('off')
     plt.title("Two-image Mosaic")
     plt.tight_layout()
-    plt.savefig("p3_output/img_3_mosaic.png")
+    plt.savefig("p3_output/img_3_mosaic_lp.png")
     plt.show()
 
     plt.figure(figsize=(12,6.5))
@@ -279,7 +279,7 @@ elif (max_idx[0] == 2):
     plt.axis('off')
     plt.title("Two-image Mosaic")
     plt.tight_layout()
-    plt.savefig("p3_output/img_3_mosaic.png")
+    plt.savefig("p3_output/img_3_mosaic_lp.png")
     plt.show()
 
     plt.figure(figsize=(12,6.5))
@@ -312,7 +312,7 @@ elif (max_idx[0] == 3):
     plt.axis('off')
     plt.title("Two-image Mosaic")
     plt.tight_layout()
-    plt.savefig("p3_output/img_3_mosaic.png")
+    plt.savefig("p3_output/img_3_mosaic_lp.png")
     plt.show()
 
     plt.figure(figsize=(12,6.5))
