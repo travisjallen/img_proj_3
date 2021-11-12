@@ -208,6 +208,12 @@ Using the above algorithm I was able to take the following pairs of images:
 	\centering
 	\includegraphics[width=6.5in]{p3_output/img_1_pieces.png}
 \end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.5in]{p3_output/img_3_pieces.png}
+\end{figure}
+
 And stitch them together into the following mosaics:
 
 \begin{figure}[H]
@@ -219,16 +225,39 @@ And stitch them together into the following mosaics:
 	\centering
 	\includegraphics[width=6.5in]{p3_output/img_1_mosaic.png}
 \end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.5in]{p3_output/img_3_mosaic.png}
+\end{figure}
+
 \vskip 5pt
 I have called this the ``na\"ive implementation" because I am simply finding the maximum phase correlation and locating purely based on that metric. This has no built in low-pass filtering method (like finding centroids of connected components, or some other clever method) and could be susceptible to unforseen difficulties relating to high frequency noise. However, this is unlikely because we can think of high frequency noise as being related to the number of sharp edges in an image. But, both of these images are composed of many high frequency signals so if this method really were so delicate, these particular images should expose this weakness. However, looking at the results we can see that these reconstructions are nearly perfect, indicating that this is a valid way of constructing mosaics that appears to be immune to high frequency noise.
 
+\subsection{Introducing a Low Pass Filter}
+Once this was working, I multiplied the phase correlation in the fourier domain with the gaussian low pass filter described and shown in part 1 of the project, prior to taking the inverse fourier transform of the result. Curiously, this seemed to only make my results worse. The most noticeable case was with the last image I showed. Without the low pass filter, the reconstruction was almost completely perfect: every fine line in each image lined up as far as the eye could tell. When I implemented the low pass filter, I got the following results:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.5in]{p3_output/img_3_mosaic_lp.png}
+\end{figure}
+Now the images are slightly offset from each other, which is most clearly seen in the illustration of the broad leaved nira right where it meets the other image.
+
+I also tried this method on the image of the electromagnet:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.5in]{p3_output/img_1_mosaic_lp.png}
+\end{figure}
+
+Similarly, the results are worse than without the gaussian low pass filter. The details are a little more subtle here, but there is a definite horizontal line where the two images meet
 \newpage
 
 \section{Part 4: Mosaic Building}
 \subsection{Algorithm Development}
-We want to build a mosaic out of a set of 6 images. We know that some of these images overlap, but we don't know how many overlap, which particular images overlap with the others, and how many sides of each image overlap. How do we even begin?
+We want to build a mosaic out of an arbitrary number of images. We know that some of these images overlap, but we don't know how many overlap, which particular images overlap with the others, and how many sides of each image overlap. How do we even begin?
 
-We begin by computing the phase correlation of images 1-5 with image 0. Note that we could have begun with a different image and completed the following process to yield identical results. The choice of beginning at image 0 is purely one made for convenient bookkeeping. Each of these 5 phase correlations is stored in an array, among which there is a maximal element. If we consider the list of the 5 maximal elements, this list itself will have a maximal entry. We find this entry and record its value as the current supremum of the set of possible phase correlation intensities. We call this value $\lambda$ such that 
+We begin by solving a simpler problem pertains directly to this assignment: we know that we have 6 images of the same size that we want to assemble into a mosaic. First, we compute the phase correlation of images 1-5 with image 0. Note that we could have begun with a different image and completed the following process to yield identical results. The choice of beginning at image 0 is purely one made for convenient bookkeeping. Each of these 5 phase correlations is stored in an array, among which there is a maximal element. If we consider the list of the 5 maximal elements, this list itself will have a maximal entry. We find this entry and record its value as the current supremum of the set of possible phase correlation intensities. We call this value $\lambda$ such that 
 \[\phi \equiv \sup_{x,y \in \mathcal{D}} \left\{p(x, y)=\mathbb{F}^{-1}\left[\frac{F^{*}(u, v) G(u, v)}{\left|F^{*}(u, v) G(u, v)\right|}\right]\right\}\] 
 
 Where $\mathcal{D}$ is the domain of the phase correlation, and $F$ and $G$ are the images that give rise to this supremum. At this point, we know that image 0 and the image which contributed the supremum of phase correlation intensities are a pair which overlap. How do we find other pairs? We can repeat the procedure of examining the maximal element of the phase correlation of each combination of images. All phase correlations of pairs of images will have extrema whether or not they overlap, so we are interested in determining if the maximal element of a particular phase correlation is sufficiently big to be indicative of an overlapping pair. But how big is sufficiently big? We will take $\phi$ as defined above as our guide and consider that if a pair of images overlap, then the maximum intensity of their phase correlation will be contained in an interval centered at $\phi$. Arbitrarily, we will say that this interval has a width of $2\delta$ where $\delta$ is some small percentage of $\phi$. In practice, this parameter will need tuning in order to reject false positives. Centering this interval at $\phi$ accounts for the case that we did not encounter the actual supremum in our initial phase correlations. A picture of this scheme is shown below.

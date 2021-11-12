@@ -47,7 +47,38 @@ def dataloader(folder_name,file_name):
     for i in range(num_images):
         field = sep.join(['cell_images',lines[i]])
         img_array[:,:,i] = io.imread(field,as_gray=True)
-    return img_array
+    return img_array,num_images
+
+@jit(nopython=True)
+def gaussian_lowpass(image,cutoff,show_filter):
+    ## image: Image array to be filtered
+    ## cutoff: number of standard deviations to include. Typical value is 8
+    ## show_filter: boolean to decide whether or not to show the graph of the filter
+    
+    ## start with array of ones
+    size = np.shape(image)
+    rows = size[0]
+    cols = size[1]
+    filt_x = np.ones((rows,cols))
+    filt_y = np.ones((rows,cols))
+
+    ## elementwise multiply each directional array of ones with gaussian
+    sigma_x = cols/cutoff
+    sigma_y = rows/cutoff
+
+    ## y direction
+    for i in range(rows):
+        for j in range(cols):
+            ## transform array index to spatial coordindate
+            spatial_i = i - ((rows/2)-1)
+            spatial_j = j - ((cols/2)-1)
+            
+            ## calculate appropriate value of gaussian, replace the appropriate element
+            filt_y[i,j] = (1/(np.sqrt(2*np.pi)*sigma_y))*np.exp(-0.5*((spatial_i/sigma_y)**2))
+            filt_x[i,j] = (1/(np.sqrt(2*np.pi)*sigma_x))*np.exp(-0.5*((spatial_j/sigma_x)**2))
+
+    ## multiply the filter with the fourier transform of the original image, return it
+    return (filt_x*filt_y)*image
 
 ## define function to perform phase correlation
 def phase_correlation(F,G):
@@ -62,209 +93,170 @@ def phase_correlation(F,G):
     correlation_fourier = F_conj_fourier*G_fourier/(np.absolute(F_conj_fourier*G_fourier))
 
     ## low pass filter the result
-    # correlation_fourier = gaussian_lowpass(correlation_fourier,20,0)
+    # correlation_fourier = gaussian_lowpass(correlation_fourier,50,0)
 
     ## compute inverse fourier transform to find phase correlation
     correlation = (np.fft.ifft2(correlation_fourier)) ## np.fft.fftshift
-
-    ## we only want the real part of the phase correlation. return it
-    size = np.shape(correlation)
-    correlation_real = np.zeros((size[0],size[1]))
+    (rows,cols) = np.shape(correlation)
+    correlation_real = np.zeros((rows,cols))
     correlation_real = correlation.real
-
     return correlation_real
-
-## define function to maximum of phase correlation
-def max_phase_correlation(F,G):
-    """Computes the maximal element in the phase correlation of two images"""
-    ## compute phase correlation of the two images
-    correlation = phase_correlation(F,G)
-
-    ## find maxiumum phase correlation, return it
-    maximum_phase_correlation = np.amax(correlation)
-    return maximum_phase_correlation
-
-def overlap(pc_real,F,G):
-    ## find the indices of the maximal element of the phase correlation, call them lambda_y and lambda_x
-    index = np.unravel_index(np.argmax(pc_real, axis=None), pc_real.shape)
-    lambda_y = index[0]
-    lambda_x = index[1]
-
-    ## now compute the phase correlations of each region
-    size = np.shape(pc_real)
-    m = size[0]
-    n = size[1]
-    ml = m-lambda_y
-    nl = n-lambda_x
-    max_correlation = np.zeros((4,1))
-
-    ## region 0 ------------------------------------------------------------------------
-    region0_image1 = np.zeros((lambda_y,lambda_x))
-    region0_image2 = np.zeros((lambda_y,lambda_x))
-    if (lambda_x > 0 and lambda_y > 0):
-        ## populate according to convention described in report
-        region0_image1[0:-1,0:-1] = G[ml:-1,nl:-1]
-        region0_image2[0:-1,0:-1] = F[0:lambda_y-1,0:lambda_x-1]
-
-        ## compute phase correlation if region is larger than 0
-        
-        region_0_phase_correlation = phase_correlation(region0_image1,region0_image2)
-
-        ## find the maximal element of the phase correlation and store it
-        max_correlation[0] = np.amax(region_0_phase_correlation.real)
-    else:
-        max_correlation[0] = 0
-
-    ## region 1 ------------------------------------------------------------------------
-    region1_image1 = np.zeros((lambda_y,nl))
-    region1_image2 = np.zeros((lambda_y,nl))
-    
-    if (lambda_x > 0 and lambda_y > 0):
-        ## populate according to convention described in report
-        region1_image1[0:-1,0:-1] = G[ml:-1,0:nl-1]
-        region1_image2[0:-1,0:-1] = F[0:lambda_y-1,lambda_x:-1]
-
-        ## compute phase correlation
-        region_1_phase_correlation = phase_correlation(region1_image1,region1_image2)
-
-        ## find the maximal element of the phase correlation and store it
-        max_correlation[1] = np.amax(region_1_phase_correlation.real)
-
-    else:
-        max_correlation[1] = 0
-
-    ## region 2 ------------------------------------------------------------------------
-    region2_image1 = np.zeros((ml,lambda_x))
-    region2_image2 = np.zeros((ml,lambda_x))
-
-    if (lambda_x > 0 and lambda_y > 0):
-        ## populate according to convention described in report
-        region2_image1[0:-1,0:-1] = G[0:ml-1,nl:-1]
-        region2_image2[0:-1,0:-1] = F[lambda_y:-1,0:lambda_x-1]
-
-        ## compute phase correlation
-        region_2_phase_correlation = phase_correlation(region2_image1,region2_image2)
-
-        ## find the maximal element of the phase correlation and store it
-        max_correlation[2] = np.amax(region_2_phase_correlation.real)
-    else:
-        max_correlation[2] = 0
-
-    ## region 3 ------------------------------------------------------------------------
-    region3_image1 = np.zeros((ml,nl))
-    region3_image2 = np.zeros((ml,nl))
-
-    ## populate according to convention described in report
-    region3_image1[0:-1,0:-1] = G[0:ml-1,0:nl-1]
-    region3_image2[0:-1,0:-1] = F[lambda_y:-1,lambda_x:-1]
-
-    ## compute phase correlation
-    region_3_phase_correlation = phase_correlation(region3_image1,region3_image2)
-
-    ## find the maximal element of the phase correlation and store it
-    max_correlation[3] = np.amax(region_3_phase_correlation.real)
-
-    ## now find the index of the maximum correlation. This will correspond to the region.
-    max_idx = np.unravel_index(np.argmax(max_correlation, axis=None), max_correlation.shape)
-
-    ## now create the canvas depending on the index. 
-    if (max_idx[0] == 0):
-        ## create canvas
-        # canvas = np.ones((2*m-lambda_y,2*n-lambda_x))*127
-
-        ## now plot the images in the right places
-        # canvas[0:m,0:n] = G
-        # G_index = [m,n]
-        
-        ## how far away from the origin of image G do we place image F
-        F_index = [ml,nl]
-
-    elif (max_idx[0] == 1):
-        ## create canvas
-        # canvas = np.ones((2*m-lambda_y,n+lambda_x))*127
-
-        ## now plot the images in the right places
-        # canvas[ml:-1,0:n] = G
-        # G_index = [ml,0]
-        # canvas[0:m,lambda_x:-1] = F
-        # F_index = [0,lambda_x]
-
-        ## how far away from the origin of image G do we place image F
-        F_index = [-ml,lambda_x]
-        
-    elif (max_idx[0] == 2):
-        ## create canvas
-        # canvas = np.ones((m+lambda_y,2*n-lambda_x))*127
-
-        ## now plot the images in the right places
-        # canvas[lambda_y-1:-1,0:n] = G
-        # G_index = [lambda_y-1,0]
-        # canvas[0:m,nl-1:-1] = F
-        # F_index = [0,nl]
-        
-        ## how far away from the origin of image G do we place image F
-        F_index = [lambda_y,-nl]
-        
-        
-    elif (max_idx[0] == 3):
-        ## create canvas
-        # canvas = np.ones((m+lambda_y,n+lambda_x))*127
-    
-        ## now plot the images in the right places
-        # canvas[lambda_y-1:-1,lambda_x-1:-1] = G
-        # G_index = [lambda_y-1,lambda_x-1]
-        # canvas[0:m,0:n] = F
-        # F_index = [0,0]
-
-        ## how far away from the origin of image G do we place image F
-        F_index = [-lambda_y,-lambda_x]
-
-    # return lambdas
-    return F_index
         
 ## read the data in cell_images/read_cells.txt
-img_array = dataloader("cell_images","read_cells.txt")
+img_array,num_images = dataloader("cell_images","read_cells.txt")
 
-## plot the images
-plt.subplot(2,3,1)
-plt.imshow(img_array[:,:,0],cmap='gray')
-plt.axis('off')
-plt.subplot(2,3,2)
-plt.imshow(img_array[:,:,1],cmap='gray')
-plt.axis('off')
-plt.subplot(2,3,3)
-plt.imshow(img_array[:,:,2],cmap='gray')
-plt.axis('off')
-plt.subplot(2,3,4)
-plt.imshow(img_array[:,:,3],cmap='gray')
-plt.axis('off')
-plt.subplot(2,3,5)
-plt.imshow(img_array[:,:,4],cmap='gray')
-plt.axis('off')
-plt.subplot(2,3,6)
-plt.imshow(img_array[:,:,5],cmap='gray')
-plt.axis('off')
-plt.suptitle('Cell Images')
-plt.tight_layout()
-plt.savefig('images/cell_images_subplot.png')
+## make canvas
+canvas = np.ones((4*max_rows,4*max_cols))
+center_y = int(2*max_rows)
+center_x = int(2*max_cols)
+
+# ## compute phase correlation of image 0 and image 1
+# pc = phase_correlation(img_array[:,:,1],img_array[:,:,0])
+
+# # plt.imshow(pc,cmap='gray')
+# # plt.show()
+
+# ## find the index of the max
+# index = np.unravel_index(np.argmax(pc, axis=None), pc.shape)
+
+# ## compute new origin coords
+# origin_y = center_y - max_rows + index[0]
+# origin_x = center_x + index[1]
+# terminus_y = origin_y + max_rows
+# terminus_x = origin_x + max_cols
+
+# ## make canvas
+# canvas = np.ones((6*max_rows,6*max_cols))
+# center_y = 3*max_rows
+# center_x = 3*max_cols
+
+# ## normalize the images
+# for i in range(num_images):
+#     img_array[:,:,i] = img_array[:,:,i]/np.amax(img_array[:,:,i])
+
+# ## place image 0
+# canvas[center_y:int(center_y + 510),center_x:int(center_x + 510)] = img_array[:,:,0]
+
+# ## place image 1
+# canvas[origin_y:terminus_y,origin_x:terminus_x] = img_array[:,:,1]
+
+# # plt.imshow(canvas,cmap='gray')
+# # plt.show()
+
+# ## compute phase correlation of 1 and 2
+# pc = phase_correlation(img_array[:,:,2],img_array[:,:,1])
+
+# ## find the index of the max
+# index = np.unravel_index(np.argmax(pc, axis=None), pc.shape)
+# print(index)
+# ## reset to new origin at top of image 1
+# center_y = origin_y
+# center_x = origin_x
+
+# ## compute new origin coords
+# origin_y = center_y - max_rows + index[0]
+# origin_x = center_x + index[1]
+# terminus_y = origin_y + max_rows
+# terminus_x = origin_x + max_cols
+
+# canvas[origin_y:terminus_y,origin_x:terminus_x] = img_array[:,:,2]
+
+# plt.imshow(canvas,cmap='gray')
+# plt.show()
+
+image_center_y = max_rows/2
+image_center_x = max_cols/2
+
+images_plotted = 0
+last_image_plotted = 0
+i = 0
+direction = 1
+
+while (images_plotted < num_images):
+    ## check to see how many images have been plotted
+    if (images_plotted == 0):
+        ## then this is the first time through the loop
+        ## lay out the coordinates of the origin and terminus of the image
+        origin_y = center_y
+        origin_x = center_x
+        terminus_y = center_y + max_rows
+        terminus_x = center_x + max_cols
+        
+        ## set the corresponding location in the canvas equal to the image
+        canvas[origin_y:terminus_y, origin_x:terminus_x] = img_array[:,:,0]
+
+        ## update the images plotted counter and the last image plotted
+        images_plotted += 1
+        # i += 1
+        last_image_plotted = 0
+
+    else:
+        ## this is not the first time through the loop
+        ## compute the phase correlation of last image plotted and next image in array
+        phase_corr = phase_correlation(img_array[:,:,i],img_array[:,:,last_image_plotted])
+
+        ## find the maximum, compare it to the average
+        max_phase_correlation = np.amax(phase_corr)
+        avg_phase_correlation = np.mean(phase_corr)
+        ratio = avg_phase_correlation/max_phase_correlation
+        # print(ratio)
+
+        ## if the ratio is less than the following tuned parameter, there is overlap
+        if (ratio < 6.2e-5):
+            ## find the coordinates of the maximum phase correlation
+            max_coordinates = np.unravel_index(np.argmax(phase_corr, axis=None), phase_corr.shape)
+            # print("max coordinates: ",max_coordinates)
+            ## what quadrant are they in?
+            if ((max_coordinates[0] < image_center_y) and (max_coordinates[1] > image_center_x)):
+                ## we are in first quadrant
+                # print("Q1")
+                origin_y = center_y + max_coordinates[0]
+                origin_x = center_x + max_coordinates[1] #+ max_cols
+                terminus_y = origin_y + max_rows
+                terminus_x = origin_x + max_cols
+
+            elif ((max_coordinates[0] < image_center_y) and (max_coordinates[1] < image_center_x)):
+                ## we are in second quadrant
+                # print("Q2")
+                origin_y = center_y - max_rows + max_coordinates[0]
+                origin_x = center_x + max_coordinates[1]
+                terminus_y = origin_y + max_rows
+                terminus_x = origin_x + max_cols
+
+            elif ((max_coordinates[0] > image_center_y) and (max_coordinates[1] < image_center_x)):
+                ## we are in third quadrant
+                print("Q3")
+                origin_y = center_y
+                origin_x = center_x
+                terminus_y = origin_y + max_rows
+                terminus_x = origin_x + max_cols
+                
+            elif ((max_coordinates[0] > image_center_y) and (max_coordinates[1] > image_center_x)):
+                ## we are in fourth quadrant
+                print("Q4")
+                print("max coordinates: ",max_coordinates)
+                origin_y = center_y + max_coordinates[0] # + max_cols
+                origin_x = center_x + max_cols - max_coordinates[1]
+                terminus_y = origin_y + max_rows
+                terminus_x = origin_x + max_cols
+            
+            ## place the image
+            canvas[origin_y:terminus_y,origin_x:terminus_x] = img_array[:,:,i]
+            
+            ## update witness marks
+            center_y = origin_y
+            center_x = origin_x
+            last_image_plotted = i
+            images_plotted += 1
+            
+    ## if we have gone through all images and no overlap, reverse iteration direction
+    if (i == (num_images - 1)):
+        direction = -1
+    elif (i == 0):
+        direction = 1
+    i += direction
+    
+plt.imshow(canvas,cmap='gray')
+plt.savefig("cell_complete.png")
 plt.show()
 
-
-# ## determine if they are the same size
-# if ((np.amax(sizes[:,0]) != np.amin(sizes[:,0])) or (np.amax(sizes[:,1]) != np.amin(sizes[:,1]))):
-#     ## if this is the case, then at least one image is not as big as the biggest image
-#     print("Error: images not of same dimension")
-# else:
-#     ## execute as planned
-#     ## create a 3D array to store the images
-#     img_array = np.zeros((int(sizes[0,0]),int(sizes[0,1]),6))
-    
-#     ## fill it with the images
-#     img_array[:,:,0] = img_0
-#     img_array[:,:,1] = img_1
-#     img_array[:,:,2] = img_2
-#     img_array[:,:,3] = img_3
-#     img_array[:,:,4] = img_4
-#     img_array[:,:,5] = img_5
-
-    

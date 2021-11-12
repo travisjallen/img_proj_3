@@ -87,11 +87,11 @@ def gaussian_lowpass(image,cutoff,show_filter):
     return (filt_x*filt_y)*image
 
 ## read some images
-img_3_1 = io.imread("images/img_3_1.png",as_gray=True)
-img_3_0 = io.imread("images/img_3_0.png",as_gray=True)
+img_1_0 = io.imread("images/img_1_0.png",as_gray=True)
+img_1_1 = io.imread("images/img_1_1.png",as_gray=True)
 
 ## find their phase correlation
-pc = phase_correlation(img_3_1,img_3_0)
+pc = phase_correlation(img_1_0,img_1_1)
 
 ## there is some numerical error so imaginary parts != 0. Extract just the real part
 size = np.shape(pc)
@@ -146,8 +146,8 @@ region0_image1 = np.zeros((lambda_y,lambda_x))
 region0_image2 = np.zeros((lambda_y,lambda_x))
 
 ## populate according to convention described in report
-region0_image1[0:-1,0:-1] = img_3_1[ml:-1,nl:-1]
-region0_image2[0:-1,0:-1] = img_3_0[0:lambda_y-1,0:lambda_x-1]
+region0_image1[0:-1,0:-1] = img_1_0[ml:-1,nl:-1]
+region0_image2[0:-1,0:-1] = img_1_1[0:lambda_y-1,0:lambda_x-1]
 
 ## compute phase correlation
 region_0_phase_correlation = phase_correlation(region0_image1,region0_image2)
@@ -160,8 +160,8 @@ region1_image1 = np.zeros((lambda_y,nl))
 region1_image2 = np.zeros((lambda_y,nl))
 
 ## populate according to convention described in report
-region1_image1[0:-1,0:-1] = img_3_1[ml:-1,0:nl-1]
-region1_image2[0:-1,0:-1] = img_3_0[0:lambda_y-1,lambda_x:-1]
+region1_image1[0:-1,0:-1] = img_1_0[ml:-1,0:nl-1]
+region1_image2[0:-1,0:-1] = img_1_1[0:lambda_y-1,lambda_x:-1]
 
 ## compute phase correlation
 region_1_phase_correlation = phase_correlation(region1_image1,region1_image2)
@@ -174,8 +174,8 @@ region2_image1 = np.zeros((ml,lambda_x))
 region2_image2 = np.zeros((ml,lambda_x))
 
 ## populate according to convention described in report
-region2_image1[0:-1,0:-1] = img_3_1[0:ml-1,nl:-1]
-region2_image2[0:-1,0:-1] = img_3_0[lambda_y:-1,0:lambda_x-1]
+region2_image1[0:-1,0:-1] = img_1_0[0:ml-1,nl:-1]
+region2_image2[0:-1,0:-1] = img_1_1[lambda_y:-1,0:lambda_x-1]
 
 ## compute phase correlation
 region_2_phase_correlation = phase_correlation(region2_image1,region2_image2)
@@ -188,8 +188,8 @@ region3_image1 = np.zeros((ml,nl))
 region3_image2 = np.zeros((ml,nl))
 
 ## populate according to convention described in report
-region3_image1[0:-1,0:-1] = img_3_1[0:ml-1,0:nl-1]
-region3_image2[0:-1,0:-1] = img_3_0[lambda_y:-1,lambda_x:-1]
+region3_image1[0:-1,0:-1] = img_1_0[0:ml-1,0:nl-1]
+region3_image2[0:-1,0:-1] = img_1_1[lambda_y:-1,lambda_x:-1]
 
 ## compute phase correlation
 region_3_phase_correlation = phase_correlation(region3_image1,region3_image2)
@@ -206,30 +206,30 @@ if (max_idx[0] == 0):
     canvas = np.ones((2*m-lambda_y,2*n-lambda_x))*127
 
     ## now plot the images in the right places
-    canvas[0:m,0:n] = img_3_1
-    canvas[ml:ml+m,nl:nl+n] = img_3_0
+    canvas[0:m,0:n] = img_1_0
+    canvas[ml:ml+m,nl:nl+n] = img_1_1
     
     plt.figure(figsize=(9,9.5))
     plt.imshow(canvas,cmap='gray')
     plt.axis('off')
     plt.title("Two-image Mosaic")
     plt.tight_layout()
-    plt.savefig("p3_output/img_3_mosaic_lp.png")
+    plt.savefig("p3_output/img_1_mosaic_lp.png")
     plt.show()
 
     plt.figure(figsize=(12,6.5))
     plt.subplot(1,2,1)
-    plt.imshow(img_3_1,cmap='gray')
+    plt.imshow(img_1_0,cmap='gray')
     plt.axis('off')
     plt.title("Image 1")
 
     plt.subplot(1,2,2)
-    plt.imshow(img_3_0,cmap='gray')
+    plt.imshow(img_1_1,cmap='gray')
     plt.axis('off')
     plt.title("Image 2")
 
     plt.tight_layout()
-    plt.savefig("p3_output/img_3_pieces.png")
+    # plt.savefig("p3_output/img_0_pieces.png")
     plt.show()
 
     print("Region 0")
@@ -239,30 +239,30 @@ elif (max_idx[0] == 1):
     canvas = np.ones((2*m-lambda_y,n+lambda_x))*127
 
     ## now plot the images in the right places
-    canvas[ml:-1,0:n] = img_3_1
-    canvas[0:m,lambda_x:-1] = img_3_0
+    canvas[ml:-1,0:n] = img_1_0
+    canvas[0:m,lambda_x:-1] = img_1_1
     
     plt.figure(figsize=(9,9.5))
     plt.imshow(canvas,cmap='gray')
     plt.axis('off')
     plt.title("Two-image Mosaic")
     plt.tight_layout()
-    plt.savefig("p3_output/img_3_mosaic_lp.png")
+    plt.savefig("p3_output/img_1_mosaic_lp.png")
     plt.show()
 
     plt.figure(figsize=(12,6.5))
     plt.subplot(1,2,1)
-    plt.imshow(img_3_1,cmap='gray')
+    plt.imshow(img_1_0,cmap='gray')
     plt.axis('off')
     plt.title("Image 1")
 
     plt.subplot(1,2,2)
-    plt.imshow(img_3_0,cmap='gray')
+    plt.imshow(img_1_1,cmap='gray')
     plt.axis('off')
     plt.title("Image 2")
 
     plt.tight_layout()
-    plt.savefig("p3_output/img_3_pieces.png")
+    # plt.savefig("p3_output/img_0_pieces.png")
     plt.show()
 
     print("Region 1")
@@ -272,29 +272,29 @@ elif (max_idx[0] == 2):
     canvas = np.ones((m+lambda_y,2*n-lambda_x))*127
 
     ## now plot the images in the right places
-    canvas[lambda_y-1:-1,0:n] = img_3_1
-    canvas[0:m,nl-1:-1] = img_3_0
+    canvas[lambda_y-1:-1,0:n] = img_1_0
+    canvas[0:m,nl-1:-1] = img_1_1
     plt.figure(figsize=(9,9.5))
     plt.imshow(canvas,cmap='gray')
     plt.axis('off')
     plt.title("Two-image Mosaic")
     plt.tight_layout()
-    plt.savefig("p3_output/img_3_mosaic_lp.png")
+    plt.savefig("p3_output/img_1_mosaic_lp.png")
     plt.show()
 
     plt.figure(figsize=(12,6.5))
     plt.subplot(1,2,1)
-    plt.imshow(img_3_1,cmap='gray')
+    plt.imshow(img_1_0,cmap='gray')
     plt.axis('off')
     plt.title("Image 1")
 
     plt.subplot(1,2,2)
-    plt.imshow(img_3_0,cmap='gray')
+    plt.imshow(img_1_1,cmap='gray')
     plt.axis('off')
     plt.title("Image 2")
 
     plt.tight_layout()
-    plt.savefig("p3_output/img_3_pieces.png")
+    # plt.savefig("p3_output/img_0_pieces.png")
     plt.show()
 
     print("Region 2")
@@ -304,30 +304,30 @@ elif (max_idx[0] == 3):
     canvas = np.ones((m+lambda_y,n+lambda_x))*127
  
     ## now plot the images in the right places
-    canvas[lambda_y-1:-1,lambda_x-1:-1] = img_3_1
-    canvas[0:m,0:n] = img_3_0
+    canvas[lambda_y-1:-1,lambda_x-1:-1] = img_1_0
+    canvas[0:m,0:n] = img_1_1
     
     plt.figure(figsize=(9,9.5))
     plt.imshow(canvas,cmap='gray')
     plt.axis('off')
     plt.title("Two-image Mosaic")
     plt.tight_layout()
-    plt.savefig("p3_output/img_3_mosaic_lp.png")
+    plt.savefig("p3_output/img_1_mosaic_lp.png")
     plt.show()
 
     plt.figure(figsize=(12,6.5))
     plt.subplot(1,2,1)
-    plt.imshow(img_3_1,cmap='gray')
+    plt.imshow(img_1_0,cmap='gray')
     plt.axis('off')
     plt.title("Image 1")
 
     plt.subplot(1,2,2)
-    plt.imshow(img_3_0,cmap='gray')
+    plt.imshow(img_1_1,cmap='gray')
     plt.axis('off')
     plt.title("Image 2")
 
     plt.tight_layout()
-    plt.savefig("p3_output/img_3_pieces.png")
+    # plt.savefig("p3_output/img_0_pieces.png")
     plt.show()
 
     print("Region 3")

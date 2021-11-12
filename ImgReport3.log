@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.4.20)  10 NOV 2021 21:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.4.20)  10 NOV 2021 22:05
 entering extended mode
 **./ImgReport3.tex
 (ImgReport3.tex
@@ -364,41 +364,68 @@ File: p3_output/img_1_pieces.png Graphic file (type png)
 <use p3_output/img_1_pieces.png>
 Package pdftex.def Info: p3_output/img_1_pieces.png  used on input line 209.
 (pdftex.def)             Requested size: 469.75499pt x 254.4524pt.
-<p3_output/img_0_mosaic.png, id=63, 650.43pt x 686.565pt>
+<p3_output/img_3_pieces.png, id=63, 867.24pt x 469.755pt>
+File: p3_output/img_3_pieces.png Graphic file (type png)
+<use p3_output/img_3_pieces.png>
+Package pdftex.def Info: p3_output/img_3_pieces.png  used on input line 214.
+(pdftex.def)             Requested size: 469.75499pt x 254.4524pt.
+ [10 <./p3_output/img_0_pieces.png> <./p3_output/img_1_pieces.png>]
+<p3_output/img_0_mosaic.png, id=69, 650.43pt x 686.565pt>
 File: p3_output/img_0_mosaic.png Graphic file (type png)
 <use p3_output/img_0_mosaic.png>
-Package pdftex.def Info: p3_output/img_0_mosaic.png  used on input line 215.
+Package pdftex.def Info: p3_output/img_0_mosaic.png  used on input line 221.
 (pdftex.def)             Requested size: 469.75499pt x 495.86641pt.
- [10 <./p3_output/img_0_pieces.png> <./p3_output/img_1_pieces.png>]
-<p3_output/img_1_mosaic.png, id=69, 650.43pt x 686.565pt>
+ [11 <./p3_output/img_3_pieces.png>]
+<p3_output/img_1_mosaic.png, id=74, 650.43pt x 686.565pt>
 File: p3_output/img_1_mosaic.png Graphic file (type png)
 <use p3_output/img_1_mosaic.png>
-Package pdftex.def Info: p3_output/img_1_mosaic.png  used on input line 220.
+Package pdftex.def Info: p3_output/img_1_mosaic.png  used on input line 226.
 (pdftex.def)             Requested size: 469.75499pt x 495.86641pt.
- [11 <./p3_output/img_0_mosaic.png>]
-[12 <./p3_output/img_1_mosaic.png>]
-<overlap.png, id=78, 498.444pt x 167.097pt>
+
+[12 <./p3_output/img_0_mosaic.png>]
+<p3_output/img_3_mosaic.png, id=79, 650.43pt x 686.565pt>
+File: p3_output/img_3_mosaic.png Graphic file (type png)
+<use p3_output/img_3_mosaic.png>
+Package pdftex.def Info: p3_output/img_3_mosaic.png  used on input line 231.
+(pdftex.def)             Requested size: 469.75499pt x 495.86641pt.
+ [13 <./p3_output/img_1_mosaic.png>]
+[14 <./p3_output/img_3_mosaic.png>]
+<p3_output/img_3_mosaic_lp.png, id=89, 650.43pt x 686.565pt>
+File: p3_output/img_3_mosaic_lp.png Graphic file (type png)
+<use p3_output/img_3_mosaic_lp.png>
+Package pdftex.def Info: p3_output/img_3_mosaic_lp.png  used on input line 242.
+
+(pdftex.def)             Requested size: 469.75499pt x 495.86641pt.
+<p3_output/img_1_mosaic_lp.png, id=90, 650.43pt x 686.565pt>
+File: p3_output/img_1_mosaic_lp.png Graphic file (type png)
+<use p3_output/img_1_mosaic_lp.png>
+Package pdftex.def Info: p3_output/img_1_mosaic_lp.png  used on input line 250.
+
+(pdftex.def)             Requested size: 469.75499pt x 495.86641pt.
+ [15 <./p3_output/img_3_mosaic_lp.png>]
+[16 <./p3_output/img_1_mosaic_lp.png>]
+<overlap.png, id=99, 498.444pt x 167.097pt>
 File: overlap.png Graphic file (type png)
 <use overlap.png>
-Package pdftex.def Info: overlap.png  used on input line 238.
+Package pdftex.def Info: overlap.png  used on input line 267.
 (pdftex.def)             Requested size: 433.62pt x 145.36555pt.
-<coord_sys.png, id=79, 501.729pt x 415.005pt>
+<coord_sys.png, id=100, 501.729pt x 415.005pt>
 File: coord_sys.png Graphic file (type png)
 <use coord_sys.png>
-Package pdftex.def Info: coord_sys.png  used on input line 250.
+Package pdftex.def Info: coord_sys.png  used on input line 279.
 (pdftex.def)             Requested size: 361.34999pt x 298.89201pt.
- [13 <./overlap.png>]
-<failure_1.png, id=85, 877.02657pt x 848.4197pt>
+ [17 <./overlap.png>]
+<failure_1.png, id=105, 877.02657pt x 848.4197pt>
 File: failure_1.png Graphic file (type png)
 <use failure_1.png>
-Package pdftex.def Info: failure_1.png  used on input line 261.
+Package pdftex.def Info: failure_1.png  used on input line 290.
 (pdftex.def)             Requested size: 469.75499pt x 454.43732pt.
- [14 <./coord_sys.png>] [15 <./failure_1.png>] (ImgReport3.aux) ) 
+ [18 <./coord_sys.png>] [19 <./failure_1.png>] (ImgReport3.aux) ) 
 Here is how much of TeX's memory you used:
- 3924 strings out of 479334
- 58840 string characters out of 2857084
+ 3948 strings out of 479334
+ 59536 string characters out of 2857084
  364896 words of memory out of 3000000
- 21324 multiletter control sequences out of 15000+200000
+ 21344 multiletter control sequences out of 15000+200000
  411807 words of font info for 60 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,6n,74p,1292b,230s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -419,9 +446,9 @@ C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmt
 i10.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmtt10.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/publ
 ic/amsfonts/symbols/msbm10.pfb>
-Output written on ImgReport3.pdf (15 pages, 9541996 bytes).
+Output written on ImgReport3.pdf (19 pages, 11931785 bytes).
 PDF statistics:
- 138 PDF objects out of 1000 (max. 8388607)
+ 159 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 76 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 96 words of extra memory for PDF output out of 10000 (max. 10000000)
 
