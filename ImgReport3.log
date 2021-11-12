@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.4.20)  10 NOV 2021 22:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.4.20)  12 NOV 2021 09:20
 entering extended mode
 **./ImgReport3.tex
 (ImgReport3.tex
@@ -309,146 +309,160 @@ File: p1_output/img_0_ft_compare.png Graphic file (type png)
 Package pdftex.def Info: p1_output/img_0_ft_compare.png  used on input line 33.
 
 (pdftex.def)             Requested size: 469.75499pt x 352.31868pt.
-<p1_output/rect_filter.png, id=10, 462.528pt x 346.896pt>
+ [2 <./p1_output/img_0_ft_compare.png>]
+<p1_output/rect_filter.png, id=17, 462.528pt x 346.896pt>
 File: p1_output/rect_filter.png Graphic file (type png)
 <use p1_output/rect_filter.png>
 Package pdftex.def Info: p1_output/rect_filter.png  used on input line 71.
-(pdftex.def)             Requested size: 289.07999pt x 216.82004pt.
- [2 <./p1_output/img_0_ft_compare.png>]
-<p1_output/img_0_f_rect.png, id=19, 867.24pt x 650.43pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<p1_output/img_0_f_rect.png, id=18, 867.24pt x 650.43pt>
 File: p1_output/img_0_f_rect.png Graphic file (type png)
 <use p1_output/img_0_f_rect.png>
 Package pdftex.def Info: p1_output/img_0_f_rect.png  used on input line 81.
+(pdftex.def)             Requested size: 379.4175pt x 284.56242pt.
+<p1_output/img_1_f_rect.png, id=19, 867.24pt x 650.43pt>
+File: p1_output/img_1_f_rect.png Graphic file (type png)
+<use p1_output/img_1_f_rect.png>
+Package pdftex.def Info: p1_output/img_1_f_rect.png  used on input line 87.
 (pdftex.def)             Requested size: 469.75499pt x 352.31868pt.
- [3 <./p1_output/rect_filter.png>]
-<p1_output/gaussian_filter.png, id=24, 867.24pt x 433.62pt>
+ [3 <./p1_output/rect_filter.png> <./p1_output/img_0_f_rect.png>]
+<p1_output/gaussian_filter.png, id=26, 867.24pt x 433.62pt>
 File: p1_output/gaussian_filter.png Graphic file (type png)
 <use p1_output/gaussian_filter.png>
-Package pdftex.def Info: p1_output/gaussian_filter.png  used on input line 91.
-(pdftex.def)             Requested size: 433.62pt x 216.80946pt.
-<p1_output/img_0_f_gaussian.png, id=25, 867.24pt x 650.43pt>
+Package pdftex.def Info: p1_output/gaussian_filter.png  used on input line 97.
+(pdftex.def)             Requested size: 397.48499pt x 198.74641pt.
+<p1_output/img_0_f_gaussian.png, id=27, 867.24pt x 650.43pt>
 File: p1_output/img_0_f_gaussian.png Graphic file (type png)
 <use p1_output/img_0_f_gaussian.png>
-Package pdftex.def Info: p1_output/img_0_f_gaussian.png  used on input line 99.
-
+Package pdftex.def Info: p1_output/img_0_f_gaussian.png  used on input line 105
+.
 (pdftex.def)             Requested size: 469.75499pt x 352.31868pt.
- [4 <./p1_output/img_0_f_rect.png> <./p1_output/gaussian_filter.png>]
-<p2_output/phase_correlation_raw.png, id=33, 867.24pt x 903.375pt>
+ [4 <./p1_output/img_1_f_rect.png> <./p1_output/gaussian_filter.png>] [5 <./p1_
+output/img_0_f_gaussian.png>]
+<p2_output/phase_correlation_raw.png, id=39, 867.24pt x 903.375pt>
 File: p2_output/phase_correlation_raw.png Graphic file (type png)
 <use p2_output/phase_correlation_raw.png>
 Package pdftex.def Info: p2_output/phase_correlation_raw.png  used on input lin
-e 155.
+e 120.
 (pdftex.def)             Requested size: 469.75499pt x 489.33153pt.
- [5 <./p1_output/img_0_f_gaussian.png>]
-<p2_output/phase_correlation_low_pass.png, id=41, 867.24pt x 903.375pt>
+ [6 <./p2_output/phase_correlation_raw.png>]
+<p2_output/phase_correlation_low_pass.png, id=47, 867.24pt x 903.375pt>
 File: p2_output/phase_correlation_low_pass.png Graphic file (type png)
 <use p2_output/phase_correlation_low_pass.png>
 Package pdftex.def Info: p2_output/phase_correlation_low_pass.png  used on inpu
-t line 162.
+t line 127.
 (pdftex.def)             Requested size: 469.75499pt x 489.33153pt.
- [6 <./p2_output/phase_correlation_raw.png>] [7 <./p2_output/phase_correlation_
-low_pass.png>]
-<images/region.png, id=51, 655.029pt x 252.945pt>
+ [7 <./p2_output/phase_correlation_low_pass.png>]
+<images/region.png, id=53, 655.029pt x 252.945pt>
 File: images/region.png Graphic file (type png)
 <use images/region.png>
-Package pdftex.def Info: images/region.png  used on input line 173.
+Package pdftex.def Info: images/region.png  used on input line 138.
 (pdftex.def)             Requested size: 487.8225pt x 188.38443pt.
  [8 <./images/region.png>] [9]
-<p3_output/img_0_pieces.png, id=61, 867.24pt x 469.755pt>
+<p3_output/img_0_pieces.png, id=63, 867.24pt x 469.755pt>
 File: p3_output/img_0_pieces.png Graphic file (type png)
 <use p3_output/img_0_pieces.png>
-Package pdftex.def Info: p3_output/img_0_pieces.png  used on input line 204.
+Package pdftex.def Info: p3_output/img_0_pieces.png  used on input line 169.
 (pdftex.def)             Requested size: 469.75499pt x 254.4524pt.
-<p3_output/img_1_pieces.png, id=62, 867.24pt x 469.755pt>
+<p3_output/img_1_pieces.png, id=64, 867.24pt x 469.755pt>
 File: p3_output/img_1_pieces.png Graphic file (type png)
 <use p3_output/img_1_pieces.png>
-Package pdftex.def Info: p3_output/img_1_pieces.png  used on input line 209.
+Package pdftex.def Info: p3_output/img_1_pieces.png  used on input line 174.
 (pdftex.def)             Requested size: 469.75499pt x 254.4524pt.
-<p3_output/img_3_pieces.png, id=63, 867.24pt x 469.755pt>
+<p3_output/img_3_pieces.png, id=65, 867.24pt x 469.755pt>
 File: p3_output/img_3_pieces.png Graphic file (type png)
 <use p3_output/img_3_pieces.png>
-Package pdftex.def Info: p3_output/img_3_pieces.png  used on input line 214.
+Package pdftex.def Info: p3_output/img_3_pieces.png  used on input line 179.
 (pdftex.def)             Requested size: 469.75499pt x 254.4524pt.
  [10 <./p3_output/img_0_pieces.png> <./p3_output/img_1_pieces.png>]
-<p3_output/img_0_mosaic.png, id=69, 650.43pt x 686.565pt>
+<p3_output/img_0_mosaic.png, id=71, 650.43pt x 686.565pt>
 File: p3_output/img_0_mosaic.png Graphic file (type png)
 <use p3_output/img_0_mosaic.png>
-Package pdftex.def Info: p3_output/img_0_mosaic.png  used on input line 221.
+Package pdftex.def Info: p3_output/img_0_mosaic.png  used on input line 186.
 (pdftex.def)             Requested size: 469.75499pt x 495.86641pt.
- [11 <./p3_output/img_3_pieces.png>]
-<p3_output/img_1_mosaic.png, id=74, 650.43pt x 686.565pt>
+
+[11 <./p3_output/img_3_pieces.png>]
+<p3_output/img_1_mosaic.png, id=76, 650.43pt x 686.565pt>
 File: p3_output/img_1_mosaic.png Graphic file (type png)
 <use p3_output/img_1_mosaic.png>
-Package pdftex.def Info: p3_output/img_1_mosaic.png  used on input line 226.
+Package pdftex.def Info: p3_output/img_1_mosaic.png  used on input line 191.
 (pdftex.def)             Requested size: 469.75499pt x 495.86641pt.
-
-[12 <./p3_output/img_0_mosaic.png>]
-<p3_output/img_3_mosaic.png, id=79, 650.43pt x 686.565pt>
+ [12 <./p3_output/img_0_mosaic.png>]
+<p3_output/img_3_mosaic.png, id=81, 650.43pt x 686.565pt>
 File: p3_output/img_3_mosaic.png Graphic file (type png)
 <use p3_output/img_3_mosaic.png>
-Package pdftex.def Info: p3_output/img_3_mosaic.png  used on input line 231.
+Package pdftex.def Info: p3_output/img_3_mosaic.png  used on input line 196.
 (pdftex.def)             Requested size: 469.75499pt x 495.86641pt.
- [13 <./p3_output/img_1_mosaic.png>]
-[14 <./p3_output/img_3_mosaic.png>]
-<p3_output/img_3_mosaic_lp.png, id=89, 650.43pt x 686.565pt>
+
+[13 <./p3_output/img_1_mosaic.png>] [14 <./p3_output/img_3_mosaic.png>]
+<p3_output/img_3_mosaic_lp.png, id=91, 650.43pt x 686.565pt>
 File: p3_output/img_3_mosaic_lp.png Graphic file (type png)
 <use p3_output/img_3_mosaic_lp.png>
-Package pdftex.def Info: p3_output/img_3_mosaic_lp.png  used on input line 242.
+Package pdftex.def Info: p3_output/img_3_mosaic_lp.png  used on input line 207.
 
 (pdftex.def)             Requested size: 469.75499pt x 495.86641pt.
-<p3_output/img_1_mosaic_lp.png, id=90, 650.43pt x 686.565pt>
+
+[15 <./p3_output/img_3_mosaic_lp.png>]
+<p3_output/img_1_mosaic_lp.png, id=96, 650.43pt x 686.565pt>
 File: p3_output/img_1_mosaic_lp.png Graphic file (type png)
 <use p3_output/img_1_mosaic_lp.png>
-Package pdftex.def Info: p3_output/img_1_mosaic_lp.png  used on input line 250.
+Package pdftex.def Info: p3_output/img_1_mosaic_lp.png  used on input line 216.
 
 (pdftex.def)             Requested size: 469.75499pt x 495.86641pt.
- [15 <./p3_output/img_3_mosaic_lp.png>]
-[16 <./p3_output/img_1_mosaic_lp.png>]
-<overlap.png, id=99, 498.444pt x 167.097pt>
-File: overlap.png Graphic file (type png)
-<use overlap.png>
-Package pdftex.def Info: overlap.png  used on input line 267.
-(pdftex.def)             Requested size: 433.62pt x 145.36555pt.
-<coord_sys.png, id=100, 501.729pt x 415.005pt>
+ [16 <./p3_output/img_1_mosaic_lp.png>]
+<coord_sys.png, id=101, 501.729pt x 415.005pt>
 File: coord_sys.png Graphic file (type png)
 <use coord_sys.png>
-Package pdftex.def Info: coord_sys.png  used on input line 279.
+Package pdftex.def Info: coord_sys.png  used on input line 234.
 (pdftex.def)             Requested size: 361.34999pt x 298.89201pt.
- [17 <./overlap.png>]
-<failure_1.png, id=105, 877.02657pt x 848.4197pt>
-File: failure_1.png Graphic file (type png)
-<use failure_1.png>
-Package pdftex.def Info: failure_1.png  used on input line 290.
-(pdftex.def)             Requested size: 469.75499pt x 454.43732pt.
- [18 <./coord_sys.png>] [19 <./failure_1.png>] (ImgReport3.aux) ) 
+<images/cell_images_subplot.png, id=102, 462.528pt x 346.896pt>
+File: images/cell_images_subplot.png Graphic file (type png)
+<use images/cell_images_subplot.png>
+Package pdftex.def Info: images/cell_images_subplot.png  used on input line 244
+.
+(pdftex.def)             Requested size: 469.75499pt x 352.33655pt.
+
+[17 <./coord_sys.png>] [18 <./images/cell_images_subplot.png>]
+<cell_complete_up_close.png, id=111, 593.96906pt x 836.3747pt>
+File: cell_complete_up_close.png Graphic file (type png)
+<use cell_complete_up_close.png>
+Package pdftex.def Info: cell_complete_up_close.png  used on input line 252.
+(pdftex.def)             Requested size: 397.48499pt x 559.73004pt.
+<lola_complete_small_hole.png, id=112, 634.62094pt x 831.105pt>
+File: lola_complete_small_hole.png Graphic file (type png)
+<use lola_complete_small_hole.png>
+Package pdftex.def Info: lola_complete_small_hole.png  used on input line 258.
+(pdftex.def)             Requested size: 469.75499pt x 615.21098pt.
+ [19 <./cell_complete_up_close.png>] [20 <./lola_complete_small_hole.png>] [21]
+ (ImgReport3.aux) ) 
 Here is how much of TeX's memory you used:
- 3948 strings out of 479334
- 59536 string characters out of 2857084
- 364896 words of memory out of 3000000
- 21344 multiletter control sequences out of 15000+200000
- 411807 words of font info for 60 fonts, out of 3000000 for 9000
+ 3963 strings out of 479334
+ 60109 string characters out of 2857084
+ 364898 words of memory out of 3000000
+ 21356 multiletter control sequences out of 15000+200000
+ 412142 words of font info for 61 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,6n,74p,1292b,230s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/trav
-i/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/U
-sers/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.
-pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
-m/cmex10.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
-msfonts/cm/cmmi10.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1
-/public/amsfonts/cm/cmmi7.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fon
-ts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/travi/AppData/Local/Programs/Mi
-KTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/travi/AppData/Local/Pro
-grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/travi/AppData/L
-ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/travi/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users
-/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
-C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmt
-i10.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
-ts/cm/cmtt10.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/publ
-ic/amsfonts/symbols/msbm10.pfb>
-Output written on ImgReport3.pdf (19 pages, 11931785 bytes).
+ 68i,6n,74p,919b,226s stack positions out of 5000i,500n,10000p,200000b,50000s
+ <C:\Users\travi\AppData\Local\MiKTeX\fonts/pk/ljfour/jknapp
+en/ec/dpi600\tcrm1000.pk><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/ty
+pe1/public/amsfonts/cm/cmbx10.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX
+/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/travi/AppData/Local/Progra
+ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/travi/AppData/Loc
+al/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/travi/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/
+travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C
+:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr1
+2.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
+/cm/cmr17.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+amsfonts/cm/cmr7.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fonts/type1/
+public/amsfonts/cm/cmsy10.pfb><C:/Users/travi/AppData/Local/Programs/MiKTeX/fon
+ts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/travi/AppData/Local/Programs/Mi
+KTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/travi/AppData/Local/Pr
+ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/travi/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on ImgReport3.pdf (21 pages, 14602237 bytes).
 PDF statistics:
- 159 PDF objects out of 1000 (max. 8388607)
+ 174 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 96 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 106 words of extra memory for PDF output out of 10000 (max. 10000000)
 

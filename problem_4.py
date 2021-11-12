@@ -16,9 +16,16 @@ from numba import jit
 #********************************************************#
 #********************************************************#
 #********************************************************#
+
 ## Define the max dimensions of any image we will use
 max_rows = 510
 max_cols = 510
+
+# write the name of the txt file that contains the list of 
+# images and the path from the current directory to the 
+# folder with the images and list
+list_file_name = "read_cells.txt"
+image_folder_path = "cell_images"
 
 #********************************************************#
 #********************************************************#
@@ -45,7 +52,7 @@ def dataloader(folder_name,file_name):
     
     ## fill it with the images
     for i in range(num_images):
-        field = sep.join(['cell_images',lines[i]])
+        field = sep.join([folder_name,lines[i]])
         img_array[:,:,i] = io.imread(field,as_gray=True)
     return img_array,num_images
 
@@ -103,12 +110,12 @@ def phase_correlation(F,G):
     return correlation_real
         
 ## read the data in cell_images/read_cells.txt
-img_array,num_images = dataloader("cell_images","read_cells.txt")
+img_array,num_images = dataloader(image_folder_path,list_file_name)
 
 ## make canvas
-canvas = np.ones((4*max_rows,4*max_cols))
-center_y = int(2*max_rows)
-center_x = int(2*max_cols)
+canvas = np.ones((5*max_rows,5*max_cols))
+center_y = int(2.5*max_rows)
+center_x = int(2.5*max_cols)
 
 # ## compute phase correlation of image 0 and image 1
 # pc = phase_correlation(img_array[:,:,1],img_array[:,:,0])
@@ -226,15 +233,16 @@ while (images_plotted < num_images):
             elif ((max_coordinates[0] > image_center_y) and (max_coordinates[1] < image_center_x)):
                 ## we are in third quadrant
                 print("Q3")
-                origin_y = center_y
-                origin_x = center_x
+                print(max_coordinates,"\n")
+                origin_y = center_y + max_coordinates[0]
+                origin_x = center_x + max_coordinates[1] 
                 terminus_y = origin_y + max_rows
                 terminus_x = origin_x + max_cols
                 
             elif ((max_coordinates[0] > image_center_y) and (max_coordinates[1] > image_center_x)):
                 ## we are in fourth quadrant
-                print("Q4")
-                print("max coordinates: ",max_coordinates)
+                # print("Q4")
+                # print("max coordinates: ",max_coordinates)
                 origin_y = center_y + max_coordinates[0] # + max_cols
                 origin_x = center_x + max_cols - max_coordinates[1]
                 terminus_y = origin_y + max_rows

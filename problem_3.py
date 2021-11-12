@@ -10,7 +10,7 @@ from skimage import io
 from skimage import filters
 from skimage import morphology
 import matplotlib.pyplot as plt
-
+import time
 from numba import jit
 
 ## define function to perform phase correlation
@@ -25,7 +25,7 @@ def phase_correlation(F,G):
     correlation_fourier = F_conj_fourier*G_fourier/(np.absolute(F_conj_fourier*G_fourier))
 
     ## low pass filter the result
-    correlation_fourier = gaussian_lowpass(correlation_fourier,20,0)
+    # correlation_fourier = gaussian_lowpass(correlation_fourier,20,0)
 
     ## compute inverse fourier transform to find phase correlation
     correlation = (np.fft.ifft2(correlation_fourier)) ## np.fft.fftshift
@@ -86,6 +86,9 @@ def gaussian_lowpass(image,cutoff,show_filter):
     ## multiply the filter with the fourier transform of the original image, return it
     return (filt_x*filt_y)*image
 
+## start timer
+tic = time.perf_counter()
+
 ## read some images
 img_1_0 = io.imread("images/img_1_0.png",as_gray=True)
 img_1_1 = io.imread("images/img_1_1.png",as_gray=True)
@@ -127,7 +130,7 @@ t_image = threshold(pc_real)
 t_image = morphology.dilation(t_image)
 
 ## print the maximum element of pc_real
-print(np.amax(pc_real))
+# print(np.amax(pc_real))
 
 ## find the indices of the maximal element of the phase correlation, call them lambda_y and lambda_x
 index = np.unravel_index(np.argmax(pc_real, axis=None), pc_real.shape)
@@ -199,6 +202,10 @@ max_correlation[3] = np.amax(region_3_phase_correlation.real)
 
 ## now find the index of the maximum correlation. This will correspond to the region.
 max_idx = np.unravel_index(np.argmax(max_correlation, axis=None), max_correlation.shape)
+
+# end timer
+toc = time.perf_counter()
+print("execution time: ",toc-tic)
 
 ## now create the canvas depending on the index. 
 if (max_idx[0] == 0):
@@ -331,3 +338,5 @@ elif (max_idx[0] == 3):
     plt.show()
 
     print("Region 3")
+
+

@@ -1,24 +1,32 @@
 \relax 
 \@writefile{toc}{\contentsline {section}{\numberline {1}Part 1: FFT's}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Images and their FFTs}{2}{}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Image 0 and its fourier transform}}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Low Pass Filtering in the Fourier Domain}{2}{}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces rect$(u,v)$ filter in the Fourier Domain}}{3}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Original image and fourier-domain rect$(u,v)$ filtered image. Note that this is the same as convolution with a sinc$(x,y)$ function in the spatial domain. This filter appears to darken the image as well}}{4}{}\protected@file@percent }
-\newlabel{enumeratred_mse}{{1}{4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Original image and fourier-domian, gaussian low pass filtered image. Notice the slight blurring in the filtered image.}}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2}Part 2: Phase Correlation}{5}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Phase correlation of images 0 and 1. The raw correlation data is shown on the left, and a thresholded version is shown on the right. The thresholded version is provided because it is much easier to interpret. See the lower right corner for the pixel of highest intensity.}}{6}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Phase correlation of images 0 and 1. The low pass filtered correlation data is shown on the left, and a thresholded version is shown on the right. The thresholded version is provided because it is much easier to interpret. it is slightly harder to see, but there is a white pixel at the location of the highest intensity in the lower right corner.}}{7}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Original image and fourier-domain rect$(u,v)$ filtered image. Note that this is the same as convolution with a sinc$(x,y)$ function in the spatial domain. This filter appears to darken the image as well. This image has a lot going on in it, so it is difficult to notice the ringing.}}{3}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Original image and fourier-domain rect$(u,v)$ filtered image. Notice the subtle ringing above the harsh transition between the ceramic surrounding the electromagnet and the background in the upper third of the image. This is an unwanted artifact of the rect$(u,v)$ filter.}}{4}{}\protected@file@percent }
+\newlabel{enumeratred_mse}{{1.2}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Original image and fourier-domian, gaussian low pass filtered image. Notice the slight blurring in the filtered image.}}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Part 2: Phase Correlation}{6}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Phase correlation of images 0 and 1. The raw correlation data is shown on the left, and a thresholded version is shown on the right. The thresholded version is provided because it is much easier to interpret. See the lower right corner for the pixel of highest intensity.}}{6}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Phase correlation of images 0 and 1. The low pass filtered correlation data is shown on the left, and a thresholded version is shown on the right. The thresholded version is provided because it is much easier to interpret. it is slightly harder to see, but there is a white pixel at the location of the highest intensity in the lower right corner.}}{7}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3}Peak Finding}{8}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Algorithm Development - Na\"ive Implementation}{8}{}\protected@file@percent }
 \newlabel{alg_dev_peak}{{3.1}{8}}
 \newlabel{regions}{{3.1}{8}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Possible locations of image 1 with respect to image 2, and the regions in image 2 defined by these relative locations.}}{8}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Possible locations of image 1 with respect to image 2, and the regions in image 2 defined by these relative locations.}}{8}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Results - Na\"ive Implementation}{10}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Introducing a Low Pass Filter}{14}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Introducing a Low Pass Filter}{15}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Now the images are slightly offset from each other, which is most clearly seen in the illustration of the broad leaved nira right where it meets the other image.}}{15}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Similarly, the results are worse than without the gaussian low pass filter. The details are a little more subtle here, but there is a definite horizontal line where the two images meet.}}{16}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {4}Part 4: Mosaic Building}{17}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Algorithm Development}{17}{}\protected@file@percent }
-\newlabel{coord_sys}{{4.1}{18}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces A possible configuration of overlapping images, showing the coordinate systems with respect to which each pair was overlapped.}}{18}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Preliminary Results}{18}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces These images don't line up.}}{19}{}\protected@file@percent }
-\gdef \@abspage@last{19}
+\newlabel{coord_sys}{{4.1}{17}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces A possible configuration of overlapping images, showing the coordinate systems with respect to which each pair was overlapped.}}{17}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Results}{18}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Cell images pre-mosaicing. For the most part it's hard to tell how they would line up.}}{18}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces These images line up well, but there is a slight mismatch on the bottom two images. This is likely because they are the first and last images placed, and they are not referenced to each other, only to the next and previous images in the chain.}}{19}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces These images also line up. The missing patch in the middle is due to my very imprecise cropping procedure. Careful attention to the parts of the image that aren't around the hole shows that the images line up.}}{20}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Instructions for Implementation}{21}{}\protected@file@percent }
+\gdef \@abspage@last{21}

@@ -23,7 +23,7 @@
 	
 	\vskip 10pt
 	
-	\textbf{Images and their FFTs}
+	\subsection{Images and their FFTs}
 	I used the \texttt{numpy.fft.fft2()} function to compute the discrete fast fourier transform of each of my images. Then, I used \texttt{numpy.fft.fftshift()} to ``retile" each image so that the center of each image corresponds to a frequency of zero. The only purpose of this step is to make the results (both intermediate and final) easier to digest. Then, I computed the log of the power spectrum of each image so the results were easier to see. These results are shown below for each image.
 		
 	%-------------------------------------------------------------------------------------------
@@ -61,14 +61,14 @@
 %	
 %	\newpage
 %	
-	\textbf{Low Pass Filtering in the Fourier Domain}
-	Typically we think of low pass filtering in the spatial domain as convolution of the image with some function. From the properties of the fourier transform we know that convolution in the spatial domain is the same as multiplication in the fourier domain. This means that we can multiply the fourier transform of the image with the fourier transform of our filtering function, and then take the inverse  fourier transform of that product to achieve the same result as convolution in the spatial domain. 
+	\subsection{Low Pass Filtering in the Fourier Domain}
+		Typically we think of low pass filtering in the spatial domain as convolution of the image with some function. From the properties of the fourier transform we know that convolution in the spatial domain is the same as multiplication in the fourier domain. This means that we can multiply the fourier transform of the image with the fourier transform of our filtering function, and then take the inverse  fourier transform of that product to achieve the same result as convolution in the spatial domain. 
 	
 	I implemented this in two ways. First, I created a 2D rect$(u,v)$ function in the fourier domain (sinc$(x,y)$). This is shown below:
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=4in]{p1_output/rect_filter.png}
+		\includegraphics[width=3.75in]{p1_output/rect_filter.png}
 		\caption{rect$(u,v)$ filter in the Fourier Domain}
 	\end{figure}
 	
@@ -78,17 +78,23 @@
 	% image 1
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=6.5in]{p1_output/img_0_f_rect.png}
-		\caption{Original image and fourier-domain rect$(u,v)$ filtered image. Note that this is the same as convolution with a sinc$(x,y)$ function in the spatial domain. This filter appears to darken the image as well}
+		\includegraphics[width=5.25in]{p1_output/img_0_f_rect.png}
+		\caption{Original image and fourier-domain rect$(u,v)$ filtered image. Note that this is the same as convolution with a sinc$(x,y)$ function in the spatial domain. This filter appears to darken the image as well. This image has a lot going on in it, so it is difficult to notice the ringing.}
+	\end{figure}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=6.5in]{p1_output/img_1_f_rect.png}
+		\caption{Original image and fourier-domain rect$(u,v)$ filtered image. Notice the subtle ringing above the harsh transition between the ceramic surrounding the electromagnet and the background in the upper third of the image. This is an unwanted artifact of the rect$(u,v)$ filter.}
 	\end{figure}
 	
 	
-	Next, I created a 2D Gaussian distribution function in the fourier domain. We know that $\mathcal{F} \{\text{exp}(-\pi u^2)\} = \text{exp}(-\pi x^2)$, i.e. the fourier transform of a gaussian is a gaussian, so it was not necessary that I create this filter in the fourier domain. To make the filter, I multiplied a gaussian in $x$ with a gaussian in $y$:
+	Next, I created a 2D Gaussian distribution function in the fourier domain. We know that $\mathcal{F} \{\text{exp}(-\pi u^2)\} = \text{exp}(-\pi x^2)$, i.e. the fourier transform of a gaussian is a gaussian, so it was not necessary that I create this filter in the fourier domain so long as the images in the fourier domain are retiled (shifted) to be filtered properly with this mask. To make the filter, I multiplied a gaussian in $x$ with a gaussian in $y$:
 	%---------------------------------------------------------------------------------
 	% gaussian
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=6in]{p1_output/gaussian_filter.png}
+		\includegraphics[width=5.5in]{p1_output/gaussian_filter.png}
 		\label{enumeratred_mse}
 	\end{figure}
 
@@ -99,51 +105,10 @@ The results of this filter are shown below:
 		\includegraphics[width=6.5in]{p1_output/img_0_f_gaussian.png}
 		\caption{Original image and fourier-domian, gaussian low pass filtered image. Notice the slight blurring in the filtered image.}
 	\end{figure}
-%	%---------------------------------------------------------------------------------
-%	
-%	\begin{figure}[H]
-%		\centering
-%		\includegraphics[width=6.5in]{p1_output_keep/linear_filter_1_sp_3_nl2.png}
-%		\caption{Noise level = 2, kernel edge size = 3, Salt and Pepper Noise. From middle-left to bottom right, the MSE of each image is 0.0065, 0.0137, 0.0074, 0.0105, 0.0125 respectively.}
-%	\end{figure}
-%	%---------------------------------------------------------------------------------
-%	% image 2
-%	\begin{figure}[H]
-%		\centering
-%		\includegraphics[width=6.5in]{p1_output_keep/linear_filter_2_g_3_nl2.png}
-%		\caption{Noise level = 2, kernel edge size = 3, Gaussian Noise. From middle-left to bottom right, the MSE of each image is 0.0121, 0.0290, 0.0133, 0.0207, 0.0220 respectively.}
-%	\end{figure}
-%	
-%	\begin{figure}[H]
-%		\centering
-%		\includegraphics[width=6.5in]{p1_output_keep/linear_filter_2_sp_9_nl3.png}
-%		\caption{Noise level = 3, kernel edge size = 9, Salt and Pepper Noise. From middle-left to bottom right, the MSE of each image is 0.0142, 0.0282, 0.2307, 0.0129, 0.0360 respectively.}
-%	\end{figure}
-%	%---------------------------------------------------------------------------------
-%	% image 3
-%	\begin{figure}[H]
-%		\centering
-%		\includegraphics[width=6.5in]{p1_output_keep/linear_filter_3_g_9_nl1.png}
-%		\caption{Noise level = 1, kernel edge size = 9, Gaussian Noise. From middle-left to bottom right, the MSE of each image is 0.0144, 0.0162, 0.1665, 0.0096, 0.0339 respectively.}
-%	\end{figure}
-%	
-%	\begin{figure}[H]
-%		\centering
-%		\includegraphics[width=6.5in]{p1_output_keep/linear_filter_3_sp_5_nl2.png}
-%		\caption{Noise level = 2, kernel edge size = 5, Salt and Pepper Noise. From middle-left to bottom right, the MSE of each image is 0.0080, 0.0135, 0.0672, 0.0124, 0.0210 respectively.}
-%	\end{figure}
-%	
-%	\textbf{Discussion}
-%	As I mentioned above, in every case it appears to me that the averaging filter and the edge weighted filter were the best performing in terms of their ability to reconstruct the image to my subjective liking. However, a study of the MSE only sometimes corroborates this. In general, I found that a larger kernel size resulted in a blurrier image, so although it may have gotten rid of some noise, it went beyond this and altered the structure of the image in a different way. A study of the MSE confirms this as well: for image 0 with Gaussian noise level 1, the MSE for the averaging filter with a kernel edge size of 3 was 0.0091, while for the same noise level and filter but with a kernel edge size of 9, the MSE was 0.0109, some 16\% higher. 
-%	
-%	Image 1 served as a good test of the filter's ability to preserve predictable details that are not strictly vertical or horizontal. The original image shows many concentric circles of thin wire, and some well-performing filters were able to recover this. In the example shown with a kernel size of 9, it is easy to see the ``blurring" effect I described above. In the process of removing the noise, the filter makes the image look more like the camera was shaky or out of focus when the picture was taken.
-%	
-%	Both the averaging and edge weighted filters were able to recover the intricate details of the text in image 3 when the image had salt and pepper noise at level 2 and the filters had kernel edge size = 5. At noise level 3 with a kernel edge size of 9 however, the text was not recoverable. This is to be expected though, as this is the highest noise level and the worst performing kernel size. 
-%	
-%	\newpage
-%	
+
+\newpage
 	\section{Part 2: Phase Correlation}
-	Please see \texttt{problem\_2.py} for my implementation of this part. Please note that to run the code you will need \texttt{numba}. 
+	Please see \texttt{problem\_2.py} for my implementation of this part. Please note that to run the code you will either need to have \texttt{numba} or you will need to comment the decorator at line \texttt{106}. 
 	
 	First, I implemented raw phase correlation with no low pass filtering. This works according to the following equation:
 	\[p(x, y)=\mathbb{F}^{-1}\left[\frac{F^{*}(u, v) G(u, v)}{\left|F^{*}(u, v) G(u, v)\right|}\right]\]
@@ -155,7 +120,7 @@ The results of this filter are shown below:
 		\includegraphics[width=6.5in]{p2_output/phase_correlation_raw.png}
 		\caption{Phase correlation of images 0 and 1. The raw correlation data is shown on the left, and a thresholded version is shown on the right. The thresholded version is provided because it is much easier to interpret. See the lower right corner for the pixel of highest intensity.}
 	\end{figure}
-	
+	\newpage
 Next, I implemented a low pass filter on the above phase correlation before I took the inverse fourier transform. I used the same gaussian low pass filter from part 1 for this. Curiously, I think these results are worse.
 	\begin{figure}[H]
 		\centering
@@ -192,7 +157,7 @@ Suppose image 1 is an array of $mn$ elements, where $m$ is the number of rows an
 
 \textbf{Region 3:} Finally, consider the placement of image 1 on top of image 2 that defines region 3. In this case, we wish to place the origin of image 1 a directed distance of $(\lambda_x,\lambda_y)$ away from the origin of image 2. Thus, the vertices of region 3 in image 1 are given by $(0,0)$, $(n-\lambda_x,0)$, $(0,m-\lambda_y)$, and $(n-\lambda_x,m-\lambda_y)$. The vertices of region 3 in image 2 are $(\lambda_x,\lambda_y)$, $(n,\lambda_y)$, $(\lambda_x,m)$, and $(n,m)$. For the last time we compute the phase correlation of these two regions and record the maximum intensity.
 
-Now we have four maximum intensities, one coming from each region. We expect three of them to be meaningless (though not necessarily of the same value or order of magnitude) and one to be the maximal among the four. The region which contributes this intensity dictates the appropriate placement of image 1 on top of image 2. 
+Now we have four maximum intensities, one coming from each region. We expect three of them to be meaningless (though not necessarily of the same value or order of magnitude) and one to be the maximal among the four. The region which contributes this maximal intensity dictates the appropriate placement of image 1 on top of image 2. 
 
 Now we must define a canvas on which to place the images so we can visually inspect the results of this approach. We can easily determine the size of the canvas based on our new knowledge of the correct location of image 1 with respect to image 2. If we end up with region 0, the canvas must have $(2n-\lambda_x)$ columns and $(2m-\lambda_y)$ rows. If we end up with region 1, the canvas must have $(n+\lambda_x)$ columns and $(2m-\lambda_y)$ rows. If we end up with region 2, the canvas must have $(2n-\lambda_x)$ columns and $(m+\lambda_y)$ rows. Finally, if we end up with region 3, the canvas must have $(n+\lambda_x)$ columns and $(m+\lambda_y)$ rows. 
 
@@ -232,46 +197,36 @@ And stitch them together into the following mosaics:
 \end{figure}
 
 \vskip 5pt
-I have called this the ``na\"ive implementation" because I am simply finding the maximum phase correlation and locating purely based on that metric. This has no built in low-pass filtering method (like finding centroids of connected components, or some other clever method) and could be susceptible to unforseen difficulties relating to high frequency noise. However, this is unlikely because we can think of high frequency noise as being related to the number of sharp edges in an image. But, both of these images are composed of many high frequency signals so if this method really were so delicate, these particular images should expose this weakness. However, looking at the results we can see that these reconstructions are nearly perfect, indicating that this is a valid way of constructing mosaics that appears to be immune to high frequency noise.
-
+I have called this the ``na\"ive implementation" because I am simply finding the maximum phase correlation and locating purely based on that metric. This has no built in low-pass filtering method (Gaussian, Butterworth, finding centroids of connected components, or some other clever method) and could be susceptible to unforseen difficulties relating to high frequency noise. However, this is unlikely because we can think of high frequency noise as being related to the number of sharp edges in an image. Both of these images are composed of many edges, meaning many high frequency signals, so, if this method really were so delicate, these particular images should expose this weakness. However, looking at the results we can see that these reconstructions are nearly perfect, indicating that this is a valid way of constructing mosaics that appears to be immune to high frequency noise.
+\newpage
 \subsection{Introducing a Low Pass Filter}
-Once this was working, I multiplied the phase correlation in the fourier domain with the gaussian low pass filter described and shown in part 1 of the project, prior to taking the inverse fourier transform of the result. Curiously, this seemed to only make my results worse. The most noticeable case was with the last image I showed. Without the low pass filter, the reconstruction was almost completely perfect: every fine line in each image lined up as far as the eye could tell. When I implemented the low pass filter, I got the following results:
+Once this was working, I multiplied the shifted phase correlation in the fourier domain with the gaussian low pass filter described and shown in part 1 of the project, prior to taking the inverse shift and inverse fourier transform of the result. Curiously, this seemed to only make my results worse. The most noticeable case was with the last image I showed. Without the low pass filter, the reconstruction was almost completely perfect: every fine line in each image lined up as far as the eye could tell. When I implemented the low pass filter, I got the following results:
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=6.5in]{p3_output/img_3_mosaic_lp.png}
+	\caption{Now the images are slightly offset from each other, which is most clearly seen in the illustration of the broad leaved nira right where it meets the other image.}
 \end{figure}
-Now the images are slightly offset from each other, which is most clearly seen in the illustration of the broad leaved nira right where it meets the other image.
 
+\newpage
 I also tried this method on the image of the electromagnet:
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=6.5in]{p3_output/img_1_mosaic_lp.png}
+	\caption{Similarly, the results are worse than without the gaussian low pass filter. The details are a little more subtle here, but there is a definite horizontal line where the two images meet.}
 \end{figure}
 
-Similarly, the results are worse than without the gaussian low pass filter. The details are a little more subtle here, but there is a definite horizontal line where the two images meet
+
 \newpage
 
 \section{Part 4: Mosaic Building}
 \subsection{Algorithm Development}
 We want to build a mosaic out of an arbitrary number of images. We know that some of these images overlap, but we don't know how many overlap, which particular images overlap with the others, and how many sides of each image overlap. How do we even begin?
 
-We begin by solving a simpler problem pertains directly to this assignment: we know that we have 6 images of the same size that we want to assemble into a mosaic. First, we compute the phase correlation of images 1-5 with image 0. Note that we could have begun with a different image and completed the following process to yield identical results. The choice of beginning at image 0 is purely one made for convenient bookkeeping. Each of these 5 phase correlations is stored in an array, among which there is a maximal element. If we consider the list of the 5 maximal elements, this list itself will have a maximal entry. We find this entry and record its value as the current supremum of the set of possible phase correlation intensities. We call this value $\lambda$ such that 
-\[\phi \equiv \sup_{x,y \in \mathcal{D}} \left\{p(x, y)=\mathbb{F}^{-1}\left[\frac{F^{*}(u, v) G(u, v)}{\left|F^{*}(u, v) G(u, v)\right|}\right]\right\}\] 
+First, I arbitrarily place the first image in the center of a large canvas. In this case, and in all cases, I consider the origin of the image to be \texttt{image[0,0]} or the upper left corner of the current image. Then, I iterate through the remaining images to find an image that overlaps with the one I have just plotted. I check the overlap by comparing the maximal element of the phase correlation with the average value of the phase correlation. If the ratio of the average over the maximum is less than a certain value, that means that the maximum phase correlation is large, indicating that there is overlap. In practice, the cutoff ratio requires tuning, and I arrived at an arbitrary value of 6.2e-5, over which the two images did not overlap.
 
-Where $\mathcal{D}$ is the domain of the phase correlation, and $F$ and $G$ are the images that give rise to this supremum. At this point, we know that image 0 and the image which contributed the supremum of phase correlation intensities are a pair which overlap. How do we find other pairs? We can repeat the procedure of examining the maximal element of the phase correlation of each combination of images. All phase correlations of pairs of images will have extrema whether or not they overlap, so we are interested in determining if the maximal element of a particular phase correlation is sufficiently big to be indicative of an overlapping pair. But how big is sufficiently big? We will take $\phi$ as defined above as our guide and consider that if a pair of images overlap, then the maximum intensity of their phase correlation will be contained in an interval centered at $\phi$. Arbitrarily, we will say that this interval has a width of $2\delta$ where $\delta$ is some small percentage of $\phi$. In practice, this parameter will need tuning in order to reject false positives. Centering this interval at $\phi$ accounts for the case that we did not encounter the actual supremum in our initial phase correlations. A picture of this scheme is shown below.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=6in]{overlap.png}
-\end{figure}
-
-Now, we compute all of the possible phase correlations of combinations of images and use this metric to determine whether or not they are a pair. If they are, we will store this information in a list of pairs. Once we have completed this process for all relevant images (the phase correlation of image F with image G is the same as image G with image F), we can begin to determine where images should be placed. To do this, we compute the phase correlation as described in section \ref{alg_dev_peak}. This tells us how each pair of images overlap and it also tells us how big of a canvas is needed to contain the two images. 
-
-We can create an array that contains information about each pair. Specifically, the array should contain the image number, the number of the image that it overlaps, and the distances $\lambda_{x,i}$ and $\lambda_{y,i}$.
-
-Now it's just a matter of placing the images in the correct location. We consider the image which is a member of the most pairs to be the ``base" image, and we place that one first. Then, we place all of its pairs according to the scheme in section \ref{alg_dev_peak}. How do we handle the next images? This is more complicated. Consider the configuration of images in figure \ref{coord_sys}.
+Now that we know that the images overlap, it's just a matter of placing the images in the correct location. The method in section \ref{alg_dev_peak} tells us the directed distance away from the origin of one image we need to place the origin of the other. In the case of doing this repeatedly, the reference image is the last image we plotted and the next image is just the next image in the queue. We continue to shift the location of the origin that we care about in a manner that matches with figure 11.
 
 \begin{figure}[H]
 	\centering
@@ -280,16 +235,41 @@ Now it's just a matter of placing the images in the correct location. We conside
 	\caption{A possible configuration of overlapping images, showing the coordinate systems with respect to which each pair was overlapped.}
 \end{figure}
 
+If we encounter an image that does not overlap, we simply skip it for the time being and continue through the queue of images. Once we reach the end of the queue, assuming not all images have been plotted, we work backwards toward the front of the queue following the same procedure. This process repeats until we have plotted all of the images. 
 
-We know the locations of each $(\lambda_{x,i},\lambda_{y,i})$ with respect to their own coordinate systems, but we do not yet know the location of $(\lambda_{x,1},\lambda_{y,1})$ with respect to coordinate system 0. This is simple to compute because we are not considering rotations, so the axes of each successive frame are aligned. This means that the distance from the origin of coordinate system 0 to an arbitrary $(\lambda_{x,n},\lambda_{y,n})$ is the vector sum of of each intervening $(\lambda_{x,i},\lambda_{y,i})$ expressed in its own coordinate system. We can use this information to place the images on the canvas correctly.
-
-\subsection{Preliminary Results}
-This method failed and I am not sure where. It was (unnecessarily?) complex, so it is hard to track down where it failed. The results are shown below. Some images are occluded or left out entirely, but that doesn't really matter because the images that do overlap don't actually line up. Back to the drawing board.
+\subsection{Results}
+This method works fairly robustly. Shown below are some results with the cell images and one of the images from part 1.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=6.5in]{failure_1.png}
-	\caption{These images don't line up.}
+	\includegraphics[width=6.5in]{images/cell_images_subplot.png}
+	\caption{Cell images pre-mosaicing. For the most part it's hard to tell how they would line up.}
 \end{figure}
+
+\newpage
+Here they are matched:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=5.5in]{cell_complete_up_close.png}
+	\caption{These images line up well, but there is a slight mismatch on the bottom two images. This is likely because they are the first and last images placed, and they are not referenced to each other, only to the next and previous images in the chain.}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.5in]{lola_complete_small_hole.png}
+	\caption{These images also line up. The missing patch in the middle is due to my very imprecise cropping procedure. Careful attention to the parts of the image that aren't around the hole shows that the images line up.}
+\end{figure}
+
+\subsection{Instructions for Implementation}
+To implement this script on your own computer, you must do the following:
+\begin{itemize}
+	\item Place all of the images in a folder with a known path to the directory that contains \texttt{problem\_4.py}
+	\item Place all of the names of all of the images in a \texttt{.txt} file in the folder, with each name separated by a new line
+	\item Write the names of the folder and the file in lines \texttt{27} and \texttt{28} of \texttt{problem\_4.py}
+	\item Write the maximum size of the images in lines \texttt{21} and \texttt{22} of \texttt{problem\_4.py}
+	
+\end{itemize}
+
+
 
 \end{document}          
 
